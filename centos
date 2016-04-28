@@ -43,16 +43,6 @@ echo "================== ${http_user} =================="
 useradd ${http_user}
 #chcon -Rt httpd_sys_rw_content_t /home/${http_user}
 
-#echo "================== php =================="
-#sed -i "s/user = apache/user = ${http_user}/g" /etc/php-fpm.d/www.conf
-#sed -i "s/group = apache/group = ${http_user}/g" /etc/php-fpm.d/www.conf
-#sed -i "s/short_open_tag = Off/short_open_tag = On/g" /etc/php.ini
-#sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php.ini
-#sed -i "s/expose_php = On/expose_php = Off/g" /etc/php.ini
-#mkdir -p /var/lib/php/session
-#chown ${http_user}:${http_user} /var/lib/php/session
-#setsebool -P httpd_can_network_connect=1
-
 #echo "================== vsftpd =================="
 #cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
 #cp /etc/pam.d/vsftpd /etc/pam.d/vsftpd.bak
@@ -115,15 +105,18 @@ echo '================== composer =================='
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 #composer global require "fxp/composer-asset-plugin:1.1.1"
 
+#echo '================== docker =================='
+#curl -fsSL https://get.docker.com/ | sh
+
 echo '================== config =================='
 #systemctl enable vsftpd
 #systemctl start vsftpd
-#systemctl enable docker
-#systemctl start docker
 #systemctl enable www
 #systemctl start www
 systemctl enable php-fpm
 systemctl start php-fpm
+#systemctl enable docker
+#systemctl start docker
 
 #back
 cd ${dir}
