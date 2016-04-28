@@ -11,6 +11,8 @@ dir=$(cd `dirname $0`; pwd)
 version_pcre='10.21'
 version_nginx='1.8.1'
 version_php='7.0.5'
+version_docker_compose='1.7.0'
+version_node='6.0.0'
 http_user='www'
 
 #installer
@@ -78,11 +80,11 @@ name="php-${version_php}"
 tar="${name}.tar.gz"
 path="/usr/local/php"
 installer ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${http_user} --with-fpm-group=${http_user} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
-ln -sf ${path}/bin/php /usr/bin/php
-ln -sf ${path}/bin/phpize /usr/bin/phpize
-ln -sf ${path}/bin/pear /usr/bin/pear
-ln -sf ${path}/bin/pecl /usr/bin/pecl
-ln -sf ${path}/sbin/php-fpm /usr/sbin/php-fpm
+ln -sf ${path}/bin/php /usr/local/bin/php
+ln -sf ${path}/bin/phpize /usr/local/bin/phpize
+ln -sf ${path}/bin/pear /usr/local/bin/pear
+ln -sf ${path}/bin/pecl /usr/local/bin/pecl
+ln -sf ${path}/sbin/php-fpm /usr/local/sbin/php-fpm
 cp ${path}/etc/php-fpm.conf.default ${path}/etc/php-fpm.conf
 cp ${path}/etc/php.ini-development ${path}/etc/php.ini
 cp ${path}/etc/php-fpm.d/www.conf.default ${path}/etc/php-fpm.d/www.conf
@@ -107,6 +109,13 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 
 #echo '================== docker =================='
 #curl -fsSL https://get.docker.com/ | sh
+#curl -L https://github.com/docker/compose/releases/download/${version_docker_compose}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+#chmod +x /usr/local/bin/docker-compose
+
+#echo '================== node =================='
+#name="node-v${version_node}"
+#tar="${name}.tar.gz"
+#installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar}
 
 echo '================== config =================='
 #systemctl enable vsftpd
