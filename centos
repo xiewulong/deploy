@@ -13,7 +13,8 @@ version_nginx='1.8.1'
 version_php='7.0.5'
 version_docker_compose='1.7.0'
 version_node='6.0.0'
-http_user='www'
+user_http='www'
+user_git='git'
 
 #installer
 function installer() {
@@ -31,7 +32,7 @@ function installer() {
 cd
 
 #echo '================== hostname =================='
-#hostnamectl set-hostname ${http_user}
+#hostnamectl set-hostname ${user_http}
 
 echo '================== add repo && install tools && update && upgrade =================='
 yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
@@ -41,9 +42,9 @@ yum -y install make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl
 #yum -y install ftp golang nodejs npm siege vsftpd
 yum clean all
 
-echo "================== ${http_user} =================="
-useradd ${http_user}
-#chcon -Rt httpd_sys_rw_content_t /home/${http_user}
+echo "================== ${user_http} =================="
+useradd ${user_http}
+#chcon -Rt httpd_sys_rw_content_t /home/${user_http}
 
 #echo "================== vsftpd =================="
 #cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
@@ -73,20 +74,20 @@ installer ${name} ${tar} ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$
 echo '================== nginx =================='
 name="nginx-${version_nginx}"
 tar="${name}.tar.gz"
-installer ${name} ${tar} http://nginx.org/download/${tar} " --user=${http_user} --group=${http_user} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6"
+installer ${name} ${tar} http://nginx.org/download/${tar} " --user=${user_http} --group=${user_http} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6"
 
 echo "================== php =================="
 name="php-${version_php}"
 tar="${name}.tar.gz"
 path='/usr/local/php'
-installer ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${http_user} --with-fpm-group=${http_user} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
+installer ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${user_http} --with-fpm-group=${user_http} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
 ln -sf ${path}/bin/php /usr/local/bin/php
 ln -sf ${path}/bin/phpize /usr/local/bin/phpize
 ln -sf ${path}/bin/pear /usr/local/bin/pear
 ln -sf ${path}/bin/pecl /usr/local/bin/pecl
 ln -sf ${path}/sbin/php-fpm /usr/local/sbin/php-fpm
 cp ${path}/etc/php-fpm.conf.default ${path}/etc/php-fpm.conf
-cp ${path}/etc/php.ini-development ${path}/etc/php.ini
+cp ${path}/etc/php.ini-production ${path}/etc/php.ini
 cp ${path}/etc/php-fpm.d/www.conf.default ${path}/etc/php-fpm.d/www.conf
 sed -i 's/short_open_tag =.*/short_open_tag = On/g' ${path}/etc/php.ini
 sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' ${path}/etc/php.ini
@@ -96,7 +97,7 @@ sed -i 's/upload_max_filesize =.*/upload_max_filesize = 60M/g' ${path}/etc/php.i
 sed -i 's/max_execution_time =.*/max_execution_time = 120/g' ${path}/etc/php.ini
 sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${path}/etc/php.ini
 #mkdir -p /var/lib/php/session
-#chown ${http_user}:${http_user} /var/lib/php/session
+#chown ${user_http}:${user_http} /var/lib/php/session
 #setsebool -P httpd_can_network_connect=1
 pear config-set php_ini ${path}/etc/php.ini
 pecl config-set php_ini ${path}/etc/php.ini
@@ -119,6 +120,13 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 #installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
 #ln -sf ${path}/bin/node /usr/local/bin/node
 #ln -sf ${path}/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+
+#echo '================== git =================='
+#useradd -s /bin/git-shell ${user_git}
+#mkdir -m 700 /home/${user_git}/.ssh
+#touch /home/${user_git}/.ssh/authorized_keys
+#chmod 600 /home/${user_git}/.ssh/authorized_keys
+#chown git:git -R /home/${user_git}/.ssh
 
 echo '================== config =================='
 #systemctl enable vsftpd
