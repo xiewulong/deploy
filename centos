@@ -117,8 +117,8 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 #tar="${name}.tar.gz"
 #path='/usr/local/node'
 #installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
-ln -sf ${path}/bin/node /usr/local/bin/node
-ln -sf ${path}/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+#ln -sf ${path}/bin/node /usr/local/bin/node
+#ln -sf ${path}/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
 echo '================== config =================='
 #systemctl enable vsftpd
