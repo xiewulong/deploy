@@ -39,7 +39,7 @@ yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.
 yum -y update
 yum -y upgrade
 yum -y install make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim-minimal libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel zlib-devel subversion git-core mariadb
-#yum -y install ftp golang nodejs npm siege vsftpd
+#yum -y install ftp golang nodejs npm pptpd siege vsftpd
 yum clean all
 
 echo "================== ${user_http} =================="
@@ -129,6 +129,18 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 #chmod 600 /home/${user_git}/.ssh/authorized_keys
 #chown git:git -R /home/${user_git}/.ssh
 
+#echo '================== pptpd =================='
+#echo 'localip 192.168.192.168' >> /etc/pptpd.conf
+#echo 'remoteip 192.168.192.68-167' >> /etc/pptpd.conf
+#echo 'logfile /var/log/pptpd.log' >> /etc/ppp/options.pptpd
+#echo 'ms-dns 8.8.8.8' >> /etc/ppp/options.pptpd
+#echo 'ms-dns 8.8.4.4' >> /etc/ppp/options.pptpd
+#echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf
+#sysctl -p
+#firewall-cmd --permanent --add-port=1723/tcp
+#firewall-cmd --permanent --add-masquerade
+#firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT
+
 echo '================== config =================='
 #systemctl enable vsftpd
 #systemctl start vsftpd
@@ -138,6 +150,10 @@ systemctl enable php-fpm
 systemctl start php-fpm
 #systemctl enable docker
 #systemctl start docker
+#systemctl enable pptpd
+#systemctl start pptpd
+#systemctl enable firewalld
+#systemctl restart firewalld
 
 #back
 cd ${dir}
