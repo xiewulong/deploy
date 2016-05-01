@@ -96,7 +96,6 @@ sed -i 's/post_max_size =.*/post_max_size = 60M/g' ${path}/etc/php.ini
 sed -i 's/upload_max_filesize =.*/upload_max_filesize = 60M/g' ${path}/etc/php.ini
 sed -i 's/max_execution_time =.*/max_execution_time = 120/g' ${path}/etc/php.ini
 sed -i 's/;date.timezone =.*/date.timezone = PRC/g' ${path}/etc/php.ini
-sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${path}/etc/php.ini
 pear config-set php_ini ${path}/etc/php.ini
 pecl config-set php_ini ${path}/etc/php.ini
 #mkdir -p /var/lib/php/session
@@ -109,9 +108,9 @@ echo '================== composer =================='
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 #composer global require 'fxp/composer-asset-plugin:1.1.1'
 
-#echo '================== drupal console =================='
-#curl -L https://drupalconsole.com/installer > /usr/local/bin/drupal
-#chmod +x /usr/local/bin/drupal
+#echo '================== drush =================='
+#curl -L http://files.drush.org/drush.phar > /usr/local/bin/drush
+#chmod +x /usr/local/bin/drush
 
 #echo '================== docker =================='
 #curl -fsSL https://get.docker.com/ | sh
