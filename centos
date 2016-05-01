@@ -106,7 +106,7 @@ mv php-fpm.service /usr/lib/systemd/system/
 
 echo '================== composer =================='
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-#composer global require 'fxp/composer-asset-plugin:1.1.1'
+#composer global require 'fxp/composer-asset-plugin:~1.1.1'
 
 #echo '================== drush =================='
 #curl -L http://files.drush.org/drush.phar > /usr/local/bin/drush
