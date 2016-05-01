@@ -92,10 +92,10 @@ cp ${path}/etc/php-fpm.d/www.conf.default ${path}/etc/php-fpm.d/www.conf
 sed -i 's/short_open_tag =.*/short_open_tag = On/g' ${path}/etc/php.ini
 sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' ${path}/etc/php.ini
 sed -i 's/expose_php =.*/expose_php = Off/g' ${path}/etc/php.ini
-sed -i 's/;date.timezone =.*/date.timezone = PRC/g' ${path}/etc/php.ini
 sed -i 's/post_max_size =.*/post_max_size = 60M/g' ${path}/etc/php.ini
 sed -i 's/upload_max_filesize =.*/upload_max_filesize = 60M/g' ${path}/etc/php.ini
 sed -i 's/max_execution_time =.*/max_execution_time = 120/g' ${path}/etc/php.ini
+sed -i 's/;date.timezone =.*/date.timezone = PRC/g' ${path}/etc/php.ini
 sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${path}/etc/php.ini
 pear config-set php_ini ${path}/etc/php.ini
 pecl config-set php_ini ${path}/etc/php.ini
