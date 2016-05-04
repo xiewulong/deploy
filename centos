@@ -39,7 +39,8 @@ yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.
 yum -y update
 yum -y upgrade
 yum -y install make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim-minimal libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel zlib-devel ImageMagick-devel subversion git mariadb
-#yum -y install ftp golang nodejs npm pptpd siege vsftpd php-fpm php-cli php-mysql php-mcrypt php-gd php-mbstring php-xml php-imap php-bcmath php-pecl-memcache php-pecl-memcached php-pecl-imagick php-pecl-apcu php-intl php-pgsql php-pclzip php-pecl-sphinx
+#yum -y install php-cli php-fpm php-bcmath php-gd php-imap php-intl php-mbstring php-mcrypt php-mysql php-pgsql php-xml php-pclzip php-pecl-apcu php-pecl-imagick php-pecl-memcache php-pecl-memcached php-pecl-sphinx
+#yum -y install ftp golang nodejs npm pptpd siege vsftpd
 yum clean all
 
 echo "================== ${user_http} =================="
