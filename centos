@@ -9,8 +9,8 @@ fi
 #config
 dir=$(cd `dirname $0`; pwd)
 version_pcre='10.21'
-version_nginx='1.8.1'
-version_php='7.0.5'
+version_nginx='1.10.0'
+version_php='5.6.21'
 version_docker_compose='1.7.0'
 version_node='6.0.0'
 user_http='www'
@@ -38,8 +38,8 @@ echo '================== add repo && install tools && update && upgrade ========
 yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
 yum -y update
 yum -y upgrade
-yum -y install make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim-minimal libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel zlib-devel subversion git mariadb
-#yum -y install ftp golang nodejs npm pptpd siege vsftpd
+yum -y install make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim-minimal libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel zlib-devel ImageMagick-devel subversion git mariadb
+#yum -y install ftp golang nodejs npm pptpd siege vsftpd php-fpm php-cli php-mysql php-mcrypt php-gd php-mbstring php-xml php-imap php-bcmath php-pecl-memcache php-pecl-memcached php-pecl-imagick php-pecl-apcu php-intl php-pgsql php-pclzip php-pecl-sphinx
 yum clean all
 
 echo "================== ${user_http} =================="
@@ -47,8 +47,8 @@ useradd ${user_http}
 #chcon -Rt httpd_sys_rw_content_t /home/${user_http}
 
 #echo '================== vsftpd =================='
-#cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
-#cp /etc/pam.d/vsftpd /etc/pam.d/vsftpd.bak
+#cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.sample
+#cp /etc/pam.d/vsftpd /etc/pam.d/vsftpd.sample
 #sed -i 's/anonymous_enable=YES/anonymous_enable=NO/g' /etc/vsftpd/vsftpd.conf
 #sed -i 's/#anon_upload_enable=YES/anon_upload_enable=YES/g' /etc/vsftpd/vsftpd.conf
 #sed -i 's/#anon_mkdir_write_enable=YES/anon_mkdir_write_enable=YES/g' /etc/vsftpd/vsftpd.conf
@@ -80,7 +80,7 @@ echo '================== php =================='
 name="php-${version_php}"
 tar="${name}.tar.gz"
 path='/usr/local/php'
-installer ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${user_http} --with-fpm-group=${user_http} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
+installer ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${user_http} --with-fpm-group=${user_http} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
 ln -sf ${path}/bin/php /usr/local/bin/php
 ln -sf ${path}/bin/phpize /usr/local/bin/phpize
 ln -sf ${path}/bin/pear /usr/local/bin/pear
@@ -98,6 +98,7 @@ sed -i 's/max_execution_time =.*/max_execution_time = 120/g' ${path}/etc/php.ini
 sed -i 's/;date.timezone =.*/date.timezone = PRC/g' ${path}/etc/php.ini
 pear config-set php_ini ${path}/etc/php.ini
 pecl config-set php_ini ${path}/etc/php.ini
+#pecl install imagick memcache memcached
 #mkdir -p /var/lib/php/session
 #chown ${user_http}:${user_http} /var/lib/php/session
 #setsebool -P httpd_can_network_connect=1
@@ -107,10 +108,6 @@ mv php-fpm.service /usr/lib/systemd/system/
 echo '================== composer =================='
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 #composer global require 'fxp/composer-asset-plugin:~1.1.1'
-
-#echo '================== drush =================='
-#curl -L http://files.drush.org/drush.phar > /usr/local/bin/drush
-#chmod +x /usr/local/bin/drush
 
 #echo '================== docker =================='
 #curl -fsSL https://get.docker.com/ | sh
