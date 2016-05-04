@@ -98,7 +98,7 @@ sed -i 's/max_execution_time =.*/max_execution_time = 120/g' ${path}/etc/php.ini
 sed -i 's/;date.timezone =.*/date.timezone = PRC/g' ${path}/etc/php.ini
 pear config-set php_ini ${path}/etc/php.ini
 pecl config-set php_ini ${path}/etc/php.ini
-#pecl install imagick memcache memcached
+#pecl install apcu imagick memcache memcached
 #mkdir -p /var/lib/php/session
 #chown ${user_http}:${user_http} /var/lib/php/session
 #setsebool -P httpd_can_network_connect=1
