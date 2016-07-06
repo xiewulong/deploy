@@ -106,6 +106,13 @@ pecl config-set php_ini ${path}/etc/php.ini
 wget -c https://github.com/xiewulong/deploy/raw/master/systemd/php-fpm.service
 mv php-fpm.service /usr/lib/systemd/system/
 
+echo '================== phalcon =================='
+git clone --depth=1 git://github.com/phalcon/cphalcon.git
+cd cphalcon/build
+./install
+cd ${dir}
+echo 'extension=phalcon.so' >> ${path}/etc/php.ini
+
 echo '================== composer =================='
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 #composer global require 'fxp/composer-asset-plugin:~1.1.1'
