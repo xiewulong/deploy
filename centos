@@ -76,6 +76,8 @@ echo '================== nginx =================='
 name="nginx-${version_nginx}"
 tar="${name}.tar.gz"
 installer ${name} ${tar} http://nginx.org/download/${tar} " --user=${user_http} --group=${user_http} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6"
+wget -c https://github.com/xiewulong/nginx/raw/master/www.service.sample
+mv www.service.sample /usr/lib/systemd/system/www.service
 
 echo '================== php =================='
 name="php-${version_php}"
