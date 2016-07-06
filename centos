@@ -10,7 +10,7 @@ fi
 dir=$(cd `dirname $0`; pwd)
 version_pcre='10.21'
 version_nginx='1.10.1'
-version_php='5.6.23'
+version_php='7.0.8'
 version_docker_compose='1.8.0-rc1'
 version_node='6.2.2'
 user_http='www'
@@ -111,6 +111,11 @@ echo '================== phalcon =================='
 git clone --depth=1 git://github.com/phalcon/cphalcon.git
 cd cphalcon/build
 ./install
+#cd cphalcon/ext
+#export CFLAGS="-O2 -finline-functions -fvisibility=hidden"
+#phpize
+#./configure --enable-phalcon
+#make && make install
 cd ${dir}
 echo 'extension=phalcon.so' >> ${path}/etc/php.ini
 
