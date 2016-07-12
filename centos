@@ -35,10 +35,10 @@ cd
 #hostnamectl set-hostname ${user_http}
 
 echo '================== add repo && install tools && update && upgrade =================='
-yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
+yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm
 yum -y update
 yum -y upgrade
-yum -y install make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim* emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel zlib-devel ImageMagick-devel subversion git mariadb
+yum -y install autoconf make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim* emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel zlib-devel ImageMagick-devel subversion git mariadb
 #yum -y install php-cli php-fpm php-bcmath php-gd php-imap php-intl php-mbstring php-mcrypt php-mysql php-pgsql php-xml php-pclzip php-pecl-apcu php-pecl-imagick php-pecl-memcache php-pecl-memcached php-pecl-sphinx
 #yum -y install ftp golang mariadb-server nodejs npm pptpd ruby siege vsftpd
 yum clean all
@@ -76,6 +76,7 @@ echo '================== nginx =================='
 name="nginx-${version_nginx}"
 tar="${name}.tar.gz"
 installer ${name} ${tar} http://nginx.org/download/${tar} " --user=${user_http} --group=${user_http} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6"
+#setsebool -P httpd_can_network_connect=1
 wget -c https://github.com/xiewulong/nginx/raw/master/www.service.sample
 mv www.service.sample /usr/lib/systemd/system/www.service
 
@@ -102,24 +103,23 @@ sed -i 's/max_execution_time =.*/max_execution_time = 120/g' ${path}/etc/php.ini
 sed -i 's/;date.timezone =.*/date.timezone = PRC/g' ${path}/etc/php.ini
 pear config-set php_ini ${path}/etc/php.ini
 pecl config-set php_ini ${path}/etc/php.ini
-#pecl install apcu imagick memcache memcached
+#pecl install apcu imagick memcache memcached swoole
 #mkdir -p /var/lib/php/session
 #chown ${user_http}:${user_http} /var/lib/php/session
-#setsebool -P httpd_can_network_connect=1
 wget -c https://github.com/xiewulong/deploy/raw/master/systemd/php-fpm.service
 mv php-fpm.service /usr/lib/systemd/system/
 
-echo '================== phalcon =================='
-git clone --depth=1 git://github.com/phalcon/cphalcon.git
-cd cphalcon/build
+#echo '================== phalcon =================='
+#git clone --depth=1 git://github.com/phalcon/cphalcon.git
+#cd cphalcon/build
 ./install
 #cd cphalcon/ext
 #export CFLAGS="-O2 -finline-functions -fvisibility=hidden"
 #phpize
 #./configure --enable-phalcon
 #make && make install
-cd ${dir}
-echo 'extension=phalcon.so' >> ${path}/etc/php.ini
+#cd ${dir}
+#echo 'extension=phalcon.so' >> ${path}/etc/php.ini
 
 echo '================== composer =================='
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
