@@ -8,10 +8,11 @@ fi
 
 #config
 dir=$(cd `dirname $0`; pwd)
+version_epel='7-7'
 version_pcre='10.21'
 version_nginx='1.10.1'
 version_php='7.0.8'
-version_docker_compose='1.8.0-rc1'
+version_docker_compose='1.8.0-rc2'
 version_node='6.2.2'
 user_http='www'
 user_git='git'
@@ -35,7 +36,7 @@ cd
 #hostnamectl set-hostname ${user_http}
 
 echo '================== add repo && install tools && update && upgrade =================='
-yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm
+yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-${version_epel}.noarch.rpm
 yum -y update
 yum -y upgrade
 yum -y install autoconf make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim* emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel zlib-devel ImageMagick-devel subversion git mariadb
