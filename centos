@@ -112,7 +112,7 @@ mv php-fpm.service /usr/lib/systemd/system/
 #echo '================== phalcon =================='
 #git clone --depth=1 git://github.com/phalcon/cphalcon.git
 #cd cphalcon/build
-./install
+#./install
 #cd cphalcon/ext
 #export CFLAGS="-O2 -finline-functions -fvisibility=hidden"
 #phpize
