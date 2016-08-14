@@ -1,23 +1,25 @@
 #!/bin/bash
 
-#check permission
+# check permission
 if [ `id -u` != '0' ]; then
 	echo 'Error: You must be root to run this script'
 	exit 1
 fi
 
-#config
+# config
 dir=$(cd `dirname $0`; pwd)
-version_epel='7-7'
-version_pcre='10.21'
+installation_path='/usr/local'
+version_epel='7-8'
+version_pcre='10.22'
 version_nginx='1.10.1'
-version_php='7.0.8'
-version_docker_compose='1.8.0-rc2'
-version_node='6.3.0'
+version_php='7.0.9'
+version_docker_compose='1.8.0'
+version_node='6.3.1'
+version_ruby='2.3.1'
 user_http='www'
 user_git='git'
 
-#installer
+# installer
 function installer() {
 	wget -c $3
 	tar zxvf $2
@@ -29,44 +31,44 @@ function installer() {
 	rm -rf $1 $2
 }
 
-#go to root directory
+# go to root directory
 cd
 
-#echo '================== hostname =================='
-#hostnamectl set-hostname ${user_http}
+# echo '================== hostname =================='
+# hostnamectl set-hostname ${user_http}
 
 echo '================== add repo && install tools && update && upgrade =================='
 yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-${version_epel}.noarch.rpm
 yum -y update
 yum -y upgrade
 yum -y install autoconf make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim* emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel zlib-devel ImageMagick-devel subversion git mariadb re2c
-#yum -y install php-cli php-fpm php-bcmath php-gd php-imap php-intl php-mbstring php-mcrypt php-mysql php-pgsql php-xml php-pclzip php-pecl-apcu php-pecl-imagick php-pecl-memcache php-pecl-memcached php-pecl-sphinx
-#yum -y install ftp golang mariadb-server nodejs npm pptpd ruby siege vsftpd
+# yum -y install php-cli php-fpm php-bcmath php-gd php-imap php-intl php-mbstring php-mcrypt php-mysql php-pgsql php-xml php-pclzip php-pecl-apcu php-pecl-imagick php-pecl-memcache php-pecl-memcached php-pecl-sphinx
+# yum -y install ftp golang mariadb-server nodejs npm pptpd ruby siege vsftpd
 yum clean all
 
 echo "================== ${user_http} =================="
 useradd ${user_http}
-#chcon -Rt httpd_sys_rw_content_t /home/${user_http}
+# chcon -Rt httpd_sys_rw_content_t /home/${user_http}
 
-#echo '================== vsftpd =================='
-#cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.sample
-#cp /etc/pam.d/vsftpd /etc/pam.d/vsftpd.sample
-#sed -i 's/anonymous_enable=YES/anonymous_enable=NO/g' /etc/vsftpd/vsftpd.conf
-#sed -i 's/#anon_upload_enable=YES/anon_upload_enable=YES/g' /etc/vsftpd/vsftpd.conf
-#sed -i 's/#anon_mkdir_write_enable=YES/anon_mkdir_write_enable=YES/g' /etc/vsftpd/vsftpd.conf
-#sed -i 's/#chroot_local_user=YES/chroot_local_user=YES/g' /etc/vsftpd/vsftpd.conf
-#sed -i 's/listen=NO/listen=YES/g' /etc/vsftpd/vsftpd.conf
-#sed -i 's/listen_ipv6=YES/#listen_ipv6=YES/g' /etc/vsftpd/vsftpd.conf
-#echo 'anon_umask=002' >> /etc/vsftpd/vsftpd.conf
-#echo 'anon_other_write_enable=YES' >> /etc/vsftpd/vsftpd.conf
-#echo 'allow_writeable_chroot=YES' >> /etc/vsftpd/vsftpd.conf
-#echo 'guest_enable=YES' >> /etc/vsftpd/vsftpd.conf
-#echo 'guest_username=ftp' >> /etc/vsftpd/vsftpd.conf
-#echo 'auth required /lib64/security/pam_userdb.so db=/etc/vsftpd/vuser' > /etc/pam.d/vsftpd
-#echo 'account required /lib64/security/pam_userdb.so db=/etc/vsftpd/vuser' >> /etc/pam.d/vsftpd
-#echo '#db_load -Tt hash -f /etc/vsftpd/vuser.conf /etc/vsftpd/vuser.db' > /etc/vsftpd/vuser.conf
-#chown ftp:ftp -R /var/ftp
-#setsebool -P ftp_home_dir=1 ftpd_full_access=1
+# echo '================== vsftpd =================='
+# cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.sample
+# cp /etc/pam.d/vsftpd /etc/pam.d/vsftpd.sample
+# sed -i 's/anonymous_enable=YES/anonymous_enable=NO/g' /etc/vsftpd/vsftpd.conf
+# sed -i 's/#anon_upload_enable=YES/anon_upload_enable=YES/g' /etc/vsftpd/vsftpd.conf
+# sed -i 's/#anon_mkdir_write_enable=YES/anon_mkdir_write_enable=YES/g' /etc/vsftpd/vsftpd.conf
+# sed -i 's/#chroot_local_user=YES/chroot_local_user=YES/g' /etc/vsftpd/vsftpd.conf
+# sed -i 's/listen=NO/listen=YES/g' /etc/vsftpd/vsftpd.conf
+# sed -i 's/listen_ipv6=YES/#listen_ipv6=YES/g' /etc/vsftpd/vsftpd.conf
+# echo 'anon_umask=002' >> /etc/vsftpd/vsftpd.conf
+# echo 'anon_other_write_enable=YES' >> /etc/vsftpd/vsftpd.conf
+# echo 'allow_writeable_chroot=YES' >> /etc/vsftpd/vsftpd.conf
+# echo 'guest_enable=YES' >> /etc/vsftpd/vsftpd.conf
+# echo 'guest_username=ftp' >> /etc/vsftpd/vsftpd.conf
+# echo 'auth required /lib64/security/pam_userdb.so db=/etc/vsftpd/vuser' > /etc/pam.d/vsftpd
+# echo 'account required /lib64/security/pam_userdb.so db=/etc/vsftpd/vuser' >> /etc/pam.d/vsftpd
+# echo '#db_load -Tt hash -f /etc/vsftpd/vuser.conf /etc/vsftpd/vuser.db' > /etc/vsftpd/vuser.conf
+# chown ftp:ftp -R /var/ftp
+# setsebool -P ftp_home_dir=1 ftpd_full_access=1
 
 echo '================== pcre =================='
 name="pcre2-${version_pcre}"
@@ -77,21 +79,21 @@ echo '================== nginx =================='
 name="nginx-${version_nginx}"
 tar="${name}.tar.gz"
 installer ${name} ${tar} http://nginx.org/download/${tar} " --user=${user_http} --group=${user_http} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6"
-#setsebool -P httpd_can_network_connect=1
+# setsebool -P httpd_can_network_connect=1
 wget -c https://github.com/xiewulong/nginx/raw/master/www.service.sample
 mv www.service.sample /usr/lib/systemd/system/www.service
 
 echo '================== php =================='
 name="php-${version_php}"
 tar="${name}.tar.gz"
-path='/usr/local/php'
-installer ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${user_http} --with-fpm-group=${user_http} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
-ln -sf ${path}/bin/php /usr/local/bin/php
-ln -sf ${path}/bin/phpize /usr/local/bin/phpize
-ln -sf ${path}/bin/php-config /usr/local/bin/php-config
-ln -sf ${path}/bin/pear /usr/local/bin/pear
-ln -sf ${path}/bin/pecl /usr/local/bin/pecl
-ln -sf ${path}/sbin/php-fpm /usr/local/sbin/php-fpm
+path="${installation_path}/php"
+installer ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${user_http} --with-fpm-group=${user_http} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=${installation_path}/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
+ln -sf ${path}/bin/php ${installation_path}/bin/php
+ln -sf ${path}/bin/phpize ${installation_path}/bin/phpize
+ln -sf ${path}/bin/php-config ${installation_path}/bin/php-config
+ln -sf ${path}/bin/pear ${installation_path}/bin/pear
+ln -sf ${path}/bin/pecl ${installation_path}/bin/pecl
+ln -sf ${path}/sbin/php-fpm ${installation_path}/sbin/php-fpm
 cp ${path}/etc/php-fpm.conf.default ${path}/etc/php-fpm.conf
 cp ${path}/etc/php.ini-production ${path}/etc/php.ini
 cp ${path}/etc/php-fpm.d/www.conf.default ${path}/etc/php-fpm.d/www.conf
@@ -104,84 +106,88 @@ sed -i 's/max_execution_time =.*/max_execution_time = 120/g' ${path}/etc/php.ini
 sed -i 's/;date.timezone =.*/date.timezone = PRC/g' ${path}/etc/php.ini
 pear config-set php_ini ${path}/etc/php.ini
 pecl config-set php_ini ${path}/etc/php.ini
-#pecl install apcu imagick memcache memcached swoole
-#mkdir -p /var/lib/php/session
-#chown ${user_http}:${user_http} /var/lib/php/session
+# pecl install apcu imagick memcache memcached swoole
+# mkdir -p /var/lib/php/session
+# chown ${user_http}:${user_http} /var/lib/php/session
 wget -c https://github.com/xiewulong/deploy/raw/master/systemd/php-fpm.service
 mv php-fpm.service /usr/lib/systemd/system/
 
-#echo '================== phalcon =================='
-#git clone --depth=1 git://github.com/phalcon/cphalcon.git
-#cd cphalcon/build
-#./install
-#cd cphalcon/ext
-#export CFLAGS="-O2 -finline-functions -fvisibility=hidden"
-#phpize
-#./configure --enable-phalcon
-#make && make install
-#git clone git://github.com/phalcon/zephir.git
-#git clone git://github.com/phalcon/cphalcon.git
-#cd cphalcon
-#git checkout 2.1.x
-#../zephir/bin/zephir build --backend=ZendEngine3
-#cd ${dir}
-#echo 'extension=phalcon.so' >> ${path}/etc/php.ini
-
 echo '================== composer =================='
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-#composer global require 'fxp/composer-asset-plugin:~1.1.1'
+curl -sS https://getcomposer.org/installer | php -- --install-dir=${installation_path}/bin --filename=composer
+# composer global require 'fxp/composer-asset-plugin:~1.1.1'
 
-#echo '================== docker =================='
-#curl -fsSL https://get.docker.com/ | sh
-#sed -i "s|ExecStart=/usr/bin/docker daemon|ExecStart=/usr/bin/docker daemon --registry-mirror=https://ugdzo2pp.mirror.aliyuncs.com|g" /lib/systemd/system/docker.service
-#usermod -aG docker username
+# echo '================== docker =================='
+# curl -fsSL https://get.docker.com/ | sh
+# sed -i "s|ExecStart=/usr/bin/docker daemon|ExecStart=/usr/bin/docker daemon --registry-mirror=https://ugdzo2pp.mirror.aliyuncs.com|g" /lib/systemd/system/docker.service
+# usermod -aG docker username
 
-#echo '================== docker-compose =================='
-#curl -L https://github.com/docker/compose/releases/download/${version_docker_compose}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-#chmod +x /usr/local/bin/docker-compose
+# echo '================== docker-compose =================='
+# curl -L https://github.com/docker/compose/releases/download/${version_docker_compose}/docker-compose-`uname -s`-`uname -m` > ${installation_path}/bin/docker-compose
+# chmod +x ${installation_path}/bin/docker-compose
 
-#echo '================== node =================='
-#name="node-v${version_node}"
-#tar="${name}.tar.gz"
-#path='/usr/local/node'
-#installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
-#ln -sf ${path}/bin/node /usr/local/bin/node
-#ln -sf ${path}/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+# echo '================== node =================='
+# name="node-v${version_node}"
+# tar="${name}.tar.gz"
+# path="${installation_path}/node"
+# installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
+# ln -sf ${path}/bin/node ${installation_path}/bin/node
+# ln -sf ${path}/lib/node_modules/npm/bin/npm-cli.js ${installation_path}/bin/npm
 
-#echo '================== git =================='
-#useradd -s /bin/git-shell ${user_git}
-#mkdir -m 700 /home/${user_git}/.ssh
-#touch /home/${user_git}/.ssh/authorized_keys
-#chmod 600 /home/${user_git}/.ssh/authorized_keys
-#chown git:git -R /home/${user_git}/.ssh
+# echo '================== ruby =================='
+# name="ruby-${version_ruby}"
+# tar="${name}.tar.gz"
+# path="${installation_path}/ruby"
+# installer ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ruby%.*}/${tar} " --prefix=${path}"
+# ln -sf ${path}/bin/erb ${installation_path}/bin/erb
+# ln -sf ${path}/bin/gem ${installation_path}/bin/gem
+# ln -sf ${path}/bin/irb ${installation_path}/bin/irb
+# ln -sf ${path}/bin/rake ${installation_path}/bin/rake
+# ln -sf ${path}/bin/rdoc ${installation_path}/bin/rdoc
+# ln -sf ${path}/bin/ri ${installation_path}/bin/ri
+# ln -sf ${path}/bin/ruby ${installation_path}/bin/ruby
+# gem update --system
+
+# echo '================== sass =================='
+# gem install sass
+# ln -sf ${path}/bin/sass ${installation_path}/bin/sass
+# ln -sf ${path}/bin/sass-convert ${installation_path}/bin/sass-convert
+# ln -sf ${path}/bin/scss ${installation_path}/bin/scss
+# ln -sf ${path}/bin/update_rubygems ${installation_path}/bin/update_rubygems
+
+# echo '================== git =================='
+# useradd -s /bin/git-shell ${user_git}
+# mkdir -m 700 /home/${user_git}/.ssh
+# touch /home/${user_git}/.ssh/authorized_keys
+# chmod 600 /home/${user_git}/.ssh/authorized_keys
+# chown git:git -R /home/${user_git}/.ssh
 
 echo '================== config =================='
-#systemctl enable vsftpd
-#systemctl start vsftpd
-#systemctl enable www
-#systemctl start www
+# systemctl enable vsftpd
+# systemctl start vsftpd
+# systemctl enable www
+# systemctl start www
 systemctl enable php-fpm
 systemctl start php-fpm
-#systemctl enable docker
-#systemctl start docker
-#systemctl enable pptpd
-#systemctl start pptpd
-#systemctl enable firewalld
-#systemctl start firewalld
+# systemctl enable docker
+# systemctl start docker
+# systemctl enable pptpd
+# systemctl start pptpd
+# systemctl enable firewalld
+# systemctl start firewalld
 
-#echo '================== pptpd =================='
-#echo 'localip 192.168.192.168' >> /etc/pptpd.conf
-#echo 'remoteip 192.168.192.68-167' >> /etc/pptpd.conf
-#echo 'logfile /var/log/pptpd.log' >> /etc/ppp/options.pptpd
-#echo 'ms-dns 8.8.8.8' >> /etc/ppp/options.pptpd
-#echo 'ms-dns 8.8.4.4' >> /etc/ppp/options.pptpd
-#echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf
-#sysctl -p
-#firewall-cmd --permanent --add-port=1723/tcp
-#firewall-cmd --permanent --add-masquerade
-#firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT
-#firewall-cmd --reload
-#systemctl restart pptpd
+# echo '================== pptpd =================='
+# echo 'localip 192.168.192.168' >> /etc/pptpd.conf
+# echo 'remoteip 192.168.192.68-167' >> /etc/pptpd.conf
+# echo 'logfile /var/log/pptpd.log' >> /etc/ppp/options.pptpd
+# echo 'ms-dns 8.8.8.8' >> /etc/ppp/options.pptpd
+# echo 'ms-dns 8.8.4.4' >> /etc/ppp/options.pptpd
+# echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf
+# sysctl -p
+# firewall-cmd --permanent --add-port=1723/tcp
+# firewall-cmd --permanent --add-masquerade
+# firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT
+# firewall-cmd --reload
+# systemctl restart pptpd
 
-#back
+# back
 cd ${dir}
