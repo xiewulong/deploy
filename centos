@@ -12,9 +12,9 @@ installation_path='/usr/local'
 version_epel='7-8'
 version_pcre='10.22'
 version_nginx='1.10.1'
-version_php='7.0.9'
+version_php='7.0.11'
 version_docker_compose='1.8.0'
-version_node='6.3.1'
+version_node='6.6.0'
 version_ruby='2.3.1'
 user_http='www'
 user_git='git'
@@ -125,13 +125,17 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=${installation
 # curl -L https://github.com/docker/compose/releases/download/${version_docker_compose}/docker-compose-`uname -s`-`uname -m` > ${installation_path}/bin/docker-compose
 # chmod +x ${installation_path}/bin/docker-compose
 
-# echo '================== node =================='
-# name="node-v${version_node}"
-# tar="${name}.tar.gz"
-# path="${installation_path}/node"
-# installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
-# ln -sf ${path}/bin/node ${installation_path}/bin/node
-# ln -sf ${path}/lib/node_modules/npm/bin/npm-cli.js ${installation_path}/bin/npm
+echo '================== node =================='
+name="node-v${version_node}"
+tar="${name}.tar.gz"
+path="${installation_path}/node"
+installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
+${path}/bin/npm install -g bower gulp-cli webpack
+ln -sf ${path}/bin/bower ${installation_path}/bin/bower
+ln -sf ${path}/bin/gulp ${installation_path}/bin/gulp
+ln -sf ${path}/bin/node ${installation_path}/bin/node
+ln -sf ${path}/bin/npm ${installation_path}/bin/npm
+ln -sf ${path}/bin/webpack ${installation_path}/bin/webpack
 
 # echo '================== ruby =================='
 # name="ruby-${version_ruby}"
