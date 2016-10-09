@@ -114,7 +114,7 @@ mv php-fpm.service /usr/lib/systemd/system/
 
 echo '================== composer =================='
 curl -sS https://getcomposer.org/installer | php -- --install-dir=${installation_path}/bin --filename=composer
-# composer global require 'fxp/composer-asset-plugin:~1.1.1'
+# composer global require 'fxp/composer-asset-plugin:^1.2.0'
 
 # echo '================== docker =================='
 # curl -fsSL https://get.docker.com/ | sh
