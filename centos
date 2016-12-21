@@ -15,7 +15,7 @@ version_nginx='1.10.1'
 version_php='7.0.11'
 version_docker_compose='1.8.0'
 version_node='6.9.2'
-version_ruby='2.3.1'
+version_py3='3.5.2'
 user_http='www'
 user_git='git'
 
@@ -131,11 +131,17 @@ tar="${name}.tar.gz"
 path="${installation_path}/node"
 installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
 ${path}/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
-${path}/bin/cnpm install -g n
 ln -sf ${path}/bin/cnpm ${installation_path}/bin/cnpm
-ln -sf ${path}/bin/n ${installation_path}/bin/n
 ln -sf ${path}/bin/node ${installation_path}/bin/node
 ln -sf ${path}/bin/npm ${installation_path}/bin/npm
+
+echo '================== python 3 =================='
+name="Python-${version_py3}"
+tar="${name}.tgz"
+path="${installation_path}/python3"
+installer ${name} ${tar} https://www.python.org/ftp/python/${version_py3}/${tar} " --prefix=${path}"
+ln -sf ${path}/bin/pydoc3 ${installation_path}/bin/pydoc3
+ln -sf ${path}/bin/python3 ${installation_path}/bin/python3
 
 # echo '================== git =================='
 # useradd -s /bin/git-shell ${user_git}
