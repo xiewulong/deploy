@@ -14,7 +14,7 @@ version_pcre='10.22'
 version_nginx='1.10.1'
 version_php='7.0.11'
 version_docker_compose='1.8.0'
-version_node='6.6.0'
+version_node='6.9.2'
 version_ruby='2.3.1'
 user_http='www'
 user_git='git'
@@ -131,40 +131,9 @@ tar="${name}.tar.gz"
 path="${installation_path}/node"
 installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
 ${path}/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
-# ${path}/bin/cnpm install -g bower gulp-cli webpack
-# ln -sf ${path}/bin/bower ${installation_path}/bin/bower
 ln -sf ${path}/bin/cnpm ${installation_path}/bin/cnpm
-ln -sf ${path}/bin/cnpm-check ${installation_path}/bin/cnpm-check
-ln -sf ${path}/bin/cnpm-doc ${installation_path}/bin/cnpm-doc
-ln -sf ${path}/bin/cnpm-search ${installation_path}/bin/cnpm-search
-ln -sf ${path}/bin/cnpm-sync ${installation_path}/bin/cnpm-sync
-ln -sf ${path}/bin/cnpm-user ${installation_path}/bin/cnpm-user
-ln -sf ${path}/bin/cnpm-web ${installation_path}/bin/cnpm-web
-# ln -sf ${path}/bin/gulp ${installation_path}/bin/gulp
 ln -sf ${path}/bin/node ${installation_path}/bin/node
 ln -sf ${path}/bin/npm ${installation_path}/bin/npm
-# ln -sf ${path}/bin/webpack ${installation_path}/bin/webpack
-
-# echo '================== ruby =================='
-# name="ruby-${version_ruby}"
-# tar="${name}.tar.gz"
-# path="${installation_path}/ruby"
-# installer ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ruby%.*}/${tar} " --prefix=${path}"
-# ln -sf ${path}/bin/erb ${installation_path}/bin/erb
-# ln -sf ${path}/bin/gem ${installation_path}/bin/gem
-# ln -sf ${path}/bin/irb ${installation_path}/bin/irb
-# ln -sf ${path}/bin/rake ${installation_path}/bin/rake
-# ln -sf ${path}/bin/rdoc ${installation_path}/bin/rdoc
-# ln -sf ${path}/bin/ri ${installation_path}/bin/ri
-# ln -sf ${path}/bin/ruby ${installation_path}/bin/ruby
-# gem update --system
-
-# echo '================== sass =================='
-# gem install sass
-# ln -sf ${path}/bin/sass ${installation_path}/bin/sass
-# ln -sf ${path}/bin/sass-convert ${installation_path}/bin/sass-convert
-# ln -sf ${path}/bin/scss ${installation_path}/bin/scss
-# ln -sf ${path}/bin/update_rubygems ${installation_path}/bin/update_rubygems
 
 # echo '================== git =================='
 # useradd -s /bin/git-shell ${user_git}
