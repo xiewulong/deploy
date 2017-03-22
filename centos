@@ -10,7 +10,6 @@ fi
 dir=$(cd `dirname $0`; pwd)
 installation_path='/usr/local'
 version_epel='7-9'
-version_pcre='10.23'
 version_nginx='1.10.3'
 version_php='7.1.2'
 version_docker_compose='1.11.2'
@@ -41,7 +40,7 @@ echo '================== add repo && install tools && update && upgrade ========
 yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-${version_epel}.noarch.rpm
 yum -y update
 yum -y upgrade
-yum -y install autoconf make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim* emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel zlib-devel ImageMagick-devel subversion git mariadb re2c
+yum -y install autoconf make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim* emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel pcre-devel zlib-devel ImageMagick-devel subversion git mariadb re2c
 # yum -y install php-cli php-fpm php-bcmath php-gd php-imap php-intl php-mbstring php-mcrypt php-mysql php-pgsql php-xml php-pclzip php-pecl-apcu php-pecl-imagick php-pecl-memcache php-pecl-memcached php-pecl-sphinx
 # yum -y install ftp golang mariadb-server nodejs npm pptpd ruby siege vsftpd
 yum clean all
@@ -69,11 +68,6 @@ useradd ${user_http}
 # echo '#db_load -Tt hash -f /etc/vsftpd/vuser.conf /etc/vsftpd/vuser.db' > /etc/vsftpd/vuser.conf
 # chown ftp:ftp -R /var/ftp
 # setsebool -P ftp_home_dir=1 ftpd_full_access=1
-
-echo '================== pcre =================='
-name="pcre2-${version_pcre}"
-tar="${name}.tar.gz"
-installer ${name} ${tar} ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${tar}
 
 echo '================== nginx =================='
 name="nginx-${version_nginx}"
