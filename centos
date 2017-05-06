@@ -10,16 +10,24 @@ fi
 dir=$(cd `dirname $0`; pwd)
 installation_path='/usr/local'
 version_epel='7-9'
-version_nginx='1.10.3'
+version_nginx='1.12.0'
 version_php='7.1.2'
 version_docker_compose='1.11.2'
-version_node='6.10.0'
+version_node='6.10.3'
+version_mongodb='3.4.4'
 version_python3='3.6.0'
 user_http='www'
 user_git='git'
 
 # installer
 function installer() {
+	wget -c $3
+	tar zxvf $2
+	mv $1 $4
+}
+
+# sourceInstaller
+function sourceInstaller() {
 	wget -c $3
 	tar zxvf $2
 	cd $1
@@ -72,7 +80,7 @@ useradd ${user_http}
 echo '================== nginx =================='
 name="nginx-${version_nginx}"
 tar="${name}.tar.gz"
-installer ${name} ${tar} http://nginx.org/download/${tar} " --user=${user_http} --group=${user_http} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6"
+sourceInstaller ${name} ${tar} http://nginx.org/download/${tar} " --user=${user_http} --group=${user_http} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6"
 # setsebool -P httpd_can_network_connect=1
 wget -c https://github.com/xiewulong/nginx/raw/master/www.service.sample
 mv www.service.sample /usr/lib/systemd/system/www.service
@@ -81,7 +89,7 @@ echo '================== php =================='
 name="php-${version_php}"
 tar="${name}.tar.gz"
 path="${installation_path}/php"
-installer ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${user_http} --with-fpm-group=${user_http} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=${installation_path}/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
+sourceInstaller ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${user_http} --with-fpm-group=${user_http} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=${installation_path}/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
 ln -sf ${path}/bin/php ${installation_path}/bin/php
 ln -sf ${path}/bin/phpize ${installation_path}/bin/phpize
 ln -sf ${path}/bin/php-config ${installation_path}/bin/php-config
@@ -107,7 +115,7 @@ wget -c https://github.com/xiewulong/deploy/raw/master/systemd/php-fpm.service
 mv php-fpm.service /usr/lib/systemd/system/
 
 echo '================== composer =================='
-curl -sS https://getcomposer.org/installer | php -- --install-dir=${installation_path}/bin --filename=composer
+curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${installation_path}/bin --filename=composer
 # composer global require 'fxp/composer-asset-plugin:~1.2.0'
 
 # echo '================== docker =================='
@@ -123,7 +131,8 @@ echo '================== node =================='
 name="node-v${version_node}"
 tar="${name}.tar.gz"
 path="${installation_path}/node"
-installer ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
+# installer ${name} ${name}-linux-x64.tar.xz https://nodejs.org/dist/v${version_node}/${name}-linux-x64.tar.xz ${path}
+sourceInstaller ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
 # ${path}/bin/npm install -g --registry=https://registry.npm.taobao.org cnpm
 # ${path}/bin/cnpm install -g pm2
 # ln -sf ${path}/bin/cnpm ${installation_path}/bin/cnpm
@@ -134,11 +143,31 @@ ln -sf ${path}/bin/npm ${installation_path}/bin/npm
 # ln -sf ${path}/bin/pm2-docker ${installation_path}/bin/pm2-docker
 # ln -sf ${path}/bin/rundev ${installation_path}/bin/rundev
 
+echo '================== mongodb =================='
+name="mongodb-linux-x86_64-rhel70-${version_mongodb}"
+tar="${name}.tgz"
+path="${installation_path}/mongodb"
+installer ${name} ${tar} https://fastdl.mongodb.org/linux/${tar} ${path}
+ln -sf ${path}/bin/bsondump ${installation_path}/bin/bsondump
+ln -sf ${path}/bin/mongo ${installation_path}/bin/mongo
+ln -sf ${path}/bin/mongod ${installation_path}/bin/mongod
+ln -sf ${path}/bin/mongodump ${installation_path}/bin/mongodump
+ln -sf ${path}/bin/mongoexport ${installation_path}/bin/mongoexport
+ln -sf ${path}/bin/mongofiles ${installation_path}/bin/mongofiles
+ln -sf ${path}/bin/mongoimport ${installation_path}/bin/mongoimport
+ln -sf ${path}/bin/mongooplog ${installation_path}/bin/mongooplog
+ln -sf ${path}/bin/mongoperf ${installation_path}/bin/mongoperf
+ln -sf ${path}/bin/mongoreplay ${installation_path}/bin/mongoreplay
+ln -sf ${path}/bin/mongorestore ${installation_path}/bin/mongorestore
+ln -sf ${path}/bin/mongos ${installation_path}/bin/mongos
+ln -sf ${path}/bin/mongostat ${installation_path}/bin/mongostat
+ln -sf ${path}/bin/mongotop ${installation_path}/bin/mongotop
+
 # echo '================== python 3 =================='
 # name="Python-${version_python3}"
 # tar="${name}.tgz"
 # path="${installation_path}/python3"
-# installer ${name} ${tar} https://www.python.org/ftp/python/${version_python3}/${tar} " --prefix=${path}"
+# sourceInstaller ${name} ${tar} https://www.python.org/ftp/python/${version_python3}/${tar} " --prefix=${path}"
 # ln -sf ${path}/bin/pydoc3 ${installation_path}/bin/pydoc3
 # ln -sf ${path}/bin/python3 ${installation_path}/bin/python3
 
