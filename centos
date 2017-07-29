@@ -178,16 +178,23 @@ curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${instal
 # tar="${name}.tar.gz"
 # path="${installation_path}/ruby"
 # sourceInstaller ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ruby%.*}/${tar} " --prefix=${path}"
+# ${path}/bin/gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
+# ${path}/bin/gem update --system
 # ${path}/bin/gem install rails
+# ln -sf ${path}/bin/bundle ${installation_path}/bin/bundle
+# ln -sf ${path}/bin/bundler ${installation_path}/bin/bundler
 # ln -sf ${path}/bin/erb ${installation_path}/bin/erb
 # ln -sf ${path}/bin/gem ${installation_path}/bin/gem
 # ln -sf ${path}/bin/irb ${installation_path}/bin/irb
-# ln -sf ${path}/bin/rake ${installation_path}/bin/rake
+# ln -sf ${path}/bin/nokogiri ${installation_path}/bin/nokogiri
+# ln -sf ${path}/bin/rackup ${installation_path}/bin/rackup
 # ln -sf ${path}/bin/rails ${installation_path}/bin/rails
+# ln -sf ${path}/bin/rake ${installation_path}/bin/rake
 # ln -sf ${path}/bin/rdoc ${installation_path}/bin/rdoc
 # ln -sf ${path}/bin/ri ${installation_path}/bin/ri
 # ln -sf ${path}/bin/ruby ${installation_path}/bin/ruby
-# gem update --system
+# ln -sf ${path}/bin/sprockets ${installation_path}/bin/sprockets
+# ln -sf ${path}/bin/thor ${installation_path}/bin/thor
 
 # echo '================== git =================='
 # useradd -s /bin/git-shell ${user_git}
