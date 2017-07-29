@@ -134,11 +134,11 @@ curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${instal
 # path="${installation_path}/node"
 # installer ${name} ${name}-linux-x64.tar.xz https://nodejs.org/dist/v${version_node}/${name}-linux-x64.tar.xz ${path}
 # sourceInstaller ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
-# ln -sf ${path}/bin/node ${installation_path}/bin/node
-# ln -sf ${path}/bin/npm ${installation_path}/bin/npm
-# npm install -g --registry=https://registry.npm.taobao.org cnpm
+# ${path}/bin/npm install -g --registry=https://registry.npm.taobao.org cnpm
 # ${path}/bin/cnpm install -g pm2
 # ln -sf ${path}/bin/cnpm ${installation_path}/bin/cnpm
+# ln -sf ${path}/bin/node ${installation_path}/bin/node
+# ln -sf ${path}/bin/npm ${installation_path}/bin/npm
 # ln -sf ${path}/bin/pm2 ${installation_path}/bin/pm2
 # ln -sf ${path}/bin/pm2-daemon ${installation_path}/bin/pm2-daemon
 # ln -sf ${path}/bin/pm2-dev ${installation_path}/bin/pm2-dev
@@ -178,10 +178,12 @@ curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${instal
 # tar="${name}.tar.gz"
 # path="${installation_path}/ruby"
 # sourceInstaller ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ruby%.*}/${tar} " --prefix=${path}"
+# ${path}/bin/gem install rails
 # ln -sf ${path}/bin/erb ${installation_path}/bin/erb
 # ln -sf ${path}/bin/gem ${installation_path}/bin/gem
 # ln -sf ${path}/bin/irb ${installation_path}/bin/irb
 # ln -sf ${path}/bin/rake ${installation_path}/bin/rake
+# ln -sf ${path}/bin/rails ${installation_path}/bin/rails
 # ln -sf ${path}/bin/rdoc ${installation_path}/bin/rdoc
 # ln -sf ${path}/bin/ri ${installation_path}/bin/ri
 # ln -sf ${path}/bin/ruby ${installation_path}/bin/ruby
