@@ -16,6 +16,7 @@ version_docker_compose='1.11.2'
 version_node='6.11.1'
 version_mongodb='3.4.4'
 version_python3='3.6.0'
+version_ruby='2.4.1'
 user_http='www'
 user_git='git'
 
@@ -50,7 +51,7 @@ yum -y update
 yum -y upgrade
 yum -y install autoconf bash-completion make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim* emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel lrzsz ncurses-devel openssl-devel pcre-devel zlib-devel ImageMagick-devel subversion git mariadb re2c
 # yum -y install php-cli php-fpm php-bcmath php-gd php-imap php-intl php-mbstring php-mcrypt php-mysql php-pgsql php-xml php-pclzip php-pecl-apcu php-pecl-imagick php-pecl-memcache php-pecl-memcached php-pecl-sphinx
-# yum -y install ftp golang mariadb-server nodejs npm pptpd ruby siege vsftpd
+# yum -y install ftp golang mariadb-server nodejs npm pptpd siege vsftpd
 yum clean all
 
 echo "================== ${user_http} =================="
@@ -127,10 +128,10 @@ curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${instal
 # curl -L https://github.com/docker/compose/releases/download/${version_docker_compose}/docker-compose-`uname -s`-`uname -m` > ${installation_path}/bin/docker-compose
 # chmod +x ${installation_path}/bin/docker-compose
 
-echo '================== node =================='
-name="node-v${version_node}"
-tar="${name}.tar.gz"
-path="${installation_path}/node"
+# echo '================== node =================='
+# name="node-v${version_node}"
+# tar="${name}.tar.gz"
+# path="${installation_path}/node"
 # installer ${name} ${name}-linux-x64.tar.xz https://nodejs.org/dist/v${version_node}/${name}-linux-x64.tar.xz ${path}
 # sourceInstaller ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
 # ln -sf ${path}/bin/node ${installation_path}/bin/node
@@ -144,25 +145,25 @@ path="${installation_path}/node"
 # ln -sf ${path}/bin/pm2-docker ${installation_path}/bin/pm2-docker
 # ln -sf ${path}/bin/pm2-runtime ${installation_path}/bin/pm2-runtime
 
-echo '================== mongodb =================='
-name="mongodb-linux-x86_64-rhel70-${version_mongodb}"
-tar="${name}.tgz"
-path="${installation_path}/mongodb"
-installer ${name} ${tar} https://fastdl.mongodb.org/linux/${tar} ${path}
-ln -sf ${path}/bin/bsondump ${installation_path}/bin/bsondump
-ln -sf ${path}/bin/mongo ${installation_path}/bin/mongo
-ln -sf ${path}/bin/mongod ${installation_path}/bin/mongod
-ln -sf ${path}/bin/mongodump ${installation_path}/bin/mongodump
-ln -sf ${path}/bin/mongoexport ${installation_path}/bin/mongoexport
-ln -sf ${path}/bin/mongofiles ${installation_path}/bin/mongofiles
-ln -sf ${path}/bin/mongoimport ${installation_path}/bin/mongoimport
-ln -sf ${path}/bin/mongooplog ${installation_path}/bin/mongooplog
-ln -sf ${path}/bin/mongoperf ${installation_path}/bin/mongoperf
-ln -sf ${path}/bin/mongoreplay ${installation_path}/bin/mongoreplay
-ln -sf ${path}/bin/mongorestore ${installation_path}/bin/mongorestore
-ln -sf ${path}/bin/mongos ${installation_path}/bin/mongos
-ln -sf ${path}/bin/mongostat ${installation_path}/bin/mongostat
-ln -sf ${path}/bin/mongotop ${installation_path}/bin/mongotop
+# echo '================== mongodb =================='
+# name="mongodb-linux-x86_64-rhel70-${version_mongodb}"
+# tar="${name}.tgz"
+# path="${installation_path}/mongodb"
+# installer ${name} ${tar} https://fastdl.mongodb.org/linux/${tar} ${path}
+# ln -sf ${path}/bin/bsondump ${installation_path}/bin/bsondump
+# ln -sf ${path}/bin/mongo ${installation_path}/bin/mongo
+# ln -sf ${path}/bin/mongod ${installation_path}/bin/mongod
+# ln -sf ${path}/bin/mongodump ${installation_path}/bin/mongodump
+# ln -sf ${path}/bin/mongoexport ${installation_path}/bin/mongoexport
+# ln -sf ${path}/bin/mongofiles ${installation_path}/bin/mongofiles
+# ln -sf ${path}/bin/mongoimport ${installation_path}/bin/mongoimport
+# ln -sf ${path}/bin/mongooplog ${installation_path}/bin/mongooplog
+# ln -sf ${path}/bin/mongoperf ${installation_path}/bin/mongoperf
+# ln -sf ${path}/bin/mongoreplay ${installation_path}/bin/mongoreplay
+# ln -sf ${path}/bin/mongorestore ${installation_path}/bin/mongorestore
+# ln -sf ${path}/bin/mongos ${installation_path}/bin/mongos
+# ln -sf ${path}/bin/mongostat ${installation_path}/bin/mongostat
+# ln -sf ${path}/bin/mongotop ${installation_path}/bin/mongotop
 
 # echo '================== python 3 =================='
 # name="Python-${version_python3}"
@@ -171,6 +172,20 @@ ln -sf ${path}/bin/mongotop ${installation_path}/bin/mongotop
 # sourceInstaller ${name} ${tar} https://www.python.org/ftp/python/${version_python3}/${tar} " --prefix=${path}"
 # ln -sf ${path}/bin/pydoc3 ${installation_path}/bin/pydoc3
 # ln -sf ${path}/bin/python3 ${installation_path}/bin/python3
+
+# echo '================== ruby =================='
+# name="ruby-${version_ruby}"
+# tar="${name}.tar.gz"
+# path="${installation_path}/ruby"
+# sourceInstaller ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ruby%.*}/${tar} " --prefix=${path}"
+# ln -sf ${path}/bin/erb ${installation_path}/bin/erb
+# ln -sf ${path}/bin/gem ${installation_path}/bin/gem
+# ln -sf ${path}/bin/irb ${installation_path}/bin/irb
+# ln -sf ${path}/bin/rake ${installation_path}/bin/rake
+# ln -sf ${path}/bin/rdoc ${installation_path}/bin/rdoc
+# ln -sf ${path}/bin/ri ${installation_path}/bin/ri
+# ln -sf ${path}/bin/ruby ${installation_path}/bin/ruby
+# gem update --system
 
 # echo '================== git =================='
 # useradd -s /bin/git-shell ${user_git}
