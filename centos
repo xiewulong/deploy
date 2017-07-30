@@ -11,8 +11,9 @@ dir=$(cd `dirname $0`; pwd)
 installation_path='/usr/local'
 version_epel='7-9'
 version_nginx='1.12.1'
+version_passenger='5.1.6'
 version_php='7.1.2'
-version_docker_compose='1.11.2'
+version_docker_compose='1.15.0'
 version_node='6.11.1'
 version_mongodb='3.4.4'
 version_python3='3.6.0'
@@ -46,7 +47,8 @@ cd
 # hostnamectl set-hostname ${user_http}
 
 echo '================== add repo && install tools && update && upgrade =================='
-yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-${version_epel}.noarch.rpm
+yum -y install epel-release yum-utils
+yum-config-manager --enable epel
 yum -y update
 yum -y upgrade
 yum -y install autoconf bash-completion make cmake gcc gcc-c++ gcc-g77 redhat-lsb net-tools ntp wget curl zip unzip vim* emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel lrzsz ncurses-devel openssl-devel pcre-devel zlib-devel ImageMagick-devel subversion git mariadb re2c
@@ -78,13 +80,28 @@ useradd ${user_http}
 # chown ftp:ftp -R /var/ftp
 # setsebool -P ftp_home_dir=1 ftpd_full_access=1
 
+echo '================== passenger =================='
+name="release-${version_passenger}"
+tar="${name}.tar.gz"
+path="${installation_path}/passenger"
+installer ${name} ${tar} https://github.com/phusion/passenger/archive/${tar} ${path}
+passenger_nginx_addon_dir=$($path/bin/passenger-config --nginx-addon-dir)
+# ln -sf ${path}/bin/passenger ${installation_path}/bin/passenger
+# ln -sf ${path}/bin/passenger-config ${installation_path}/bin/passenger-config
+# ln -sf ${path}/bin/passenger-install-apache2-module ${installation_path}/bin/passenger-install-apache2-module
+# ln -sf ${path}/bin/passenger-install-nginx-module ${installation_path}/bin/passenger-install-nginx-module
+# ln -sf ${path}/bin/passenger-memory-stats ${installation_path}/bin/passenger-memory-stats
+# ln -sf ${path}/bin/passenger-status ${installation_path}/bin/passenger-status
+
 echo '================== nginx =================='
 name="nginx-${version_nginx}"
 tar="${name}.tar.gz"
-sourceInstaller ${name} ${tar} http://nginx.org/download/${tar} " --user=${user_http} --group=${user_http} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6"
+path="${installation_path}/nginx"
+sourceInstaller ${name} ${tar} http://nginx.org/download/${tar} " --prefix=${path} --user=${user_http} --group=${user_http} --with-http_gzip_static_module --with-http_image_filter_module=dynamic --with-http_ssl_module --with-http_stub_status_module --with-http_xslt_module=dynamic --with-mail=dynamic --with-stream=dynamic --with-compat --add-dynamic-module=${passenger_nginx_addon_dir}"
+ln -sf ${path}/sbin/nginx ${installation_path}/sbin/nginx
 # setsebool -P httpd_can_network_connect=1
-wget -c https://github.com/xiewulong/nginx/raw/master/www.service.sample
-mv www.service.sample /usr/lib/systemd/system/www.service
+# wget -c https://github.com/xiewulong/nginx/raw/master/www.service.sample
+# mv www.service.sample /usr/lib/systemd/system/www.service
 
 echo '================== php =================='
 name="php-${version_php}"
