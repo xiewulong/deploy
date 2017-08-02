@@ -109,13 +109,11 @@ name="release-${version_passenger}"
 tar="${name}.tar.gz"
 path="${installation_path}/passenger"
 installer ${name} ${tar} https://github.com/phusion/passenger/archive/${tar} ${path}
+echo '# passenger' >> /etc/bashrc
+echo "PATH=${path}/bin:$PATH" >> /etc/bashrc
+echo 'export PATH' >> /etc/bashrc
+source /etc/bashrc
 passenger_nginx_addon_dir=$($path/bin/passenger-config --nginx-addon-dir)
-# ln -sf ${path}/bin/passenger ${installation_path}/bin/passenger
-# ln -sf ${path}/bin/passenger-config ${installation_path}/bin/passenger-config
-# ln -sf ${path}/bin/passenger-install-apache2-module ${installation_path}/bin/passenger-install-apache2-module
-# ln -sf ${path}/bin/passenger-install-nginx-module ${installation_path}/bin/passenger-install-nginx-module
-# ln -sf ${path}/bin/passenger-memory-stats ${installation_path}/bin/passenger-memory-stats
-# ln -sf ${path}/bin/passenger-status ${installation_path}/bin/passenger-status
 
 echo '================== nginx =================='
 name="nginx-${version_nginx}"
