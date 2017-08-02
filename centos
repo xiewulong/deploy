@@ -9,15 +9,15 @@ fi
 # config
 dir=$(cd `dirname $0`; pwd)
 installation_path='/usr/local'
-version_epel='7-9'
-version_nginx='1.12.1'
+# version_epel='7-9'
+version_ruby='2.4.1'
 version_passenger='5.1.7'
+version_nginx='1.12.1'
 version_php='7.1.2'
 version_docker_compose='1.15.0'
 version_node='6.11.2'
 version_mongodb='3.4.4'
 version_python3='3.6.0'
-version_ruby='2.4.1'
 user_http='www'
 user_git='git'
 
@@ -47,6 +47,7 @@ cd
 # hostnamectl set-hostname ${user_http}
 
 echo '================== add repo && install tools && update && upgrade =================='
+# yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-${version_epel}.noarch.rpm
 yum -y install epel-release yum-utils
 yum-config-manager --enable epel
 yum -y update
@@ -79,6 +80,29 @@ useradd ${user_http}
 # echo '#db_load -Tt hash -f /etc/vsftpd/vuser.conf /etc/vsftpd/vuser.db' > /etc/vsftpd/vuser.conf
 # chown ftp:ftp -R /var/ftp
 # setsebool -P ftp_home_dir=1 ftpd_full_access=1
+
+echo '================== ruby =================='
+name="ruby-${version_ruby}"
+tar="${name}.tar.gz"
+path="${installation_path}/ruby"
+sourceInstaller ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ruby%.*}/${tar} " --prefix=${path}"
+${path}/bin/gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
+${path}/bin/gem update --system
+${path}/bin/gem install rails
+ln -sf ${path}/bin/bundle ${installation_path}/bin/bundle
+ln -sf ${path}/bin/bundler ${installation_path}/bin/bundler
+ln -sf ${path}/bin/erb ${installation_path}/bin/erb
+ln -sf ${path}/bin/gem ${installation_path}/bin/gem
+ln -sf ${path}/bin/irb ${installation_path}/bin/irb
+ln -sf ${path}/bin/nokogiri ${installation_path}/bin/nokogiri
+ln -sf ${path}/bin/rackup ${installation_path}/bin/rackup
+ln -sf ${path}/bin/rails ${installation_path}/bin/rails
+ln -sf ${path}/bin/rake ${installation_path}/bin/rake
+ln -sf ${path}/bin/rdoc ${installation_path}/bin/rdoc
+ln -sf ${path}/bin/ri ${installation_path}/bin/ri
+ln -sf ${path}/bin/ruby ${installation_path}/bin/ruby
+ln -sf ${path}/bin/sprockets ${installation_path}/bin/sprockets
+ln -sf ${path}/bin/thor ${installation_path}/bin/thor
 
 echo '================== passenger =================='
 name="release-${version_passenger}"
@@ -189,29 +213,6 @@ curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${instal
 # sourceInstaller ${name} ${tar} https://www.python.org/ftp/python/${version_python3}/${tar} " --prefix=${path}"
 # ln -sf ${path}/bin/pydoc3 ${installation_path}/bin/pydoc3
 # ln -sf ${path}/bin/python3 ${installation_path}/bin/python3
-
-# echo '================== ruby =================='
-# name="ruby-${version_ruby}"
-# tar="${name}.tar.gz"
-# path="${installation_path}/ruby"
-# sourceInstaller ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ruby%.*}/${tar} " --prefix=${path}"
-# ${path}/bin/gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
-# ${path}/bin/gem update --system
-# ${path}/bin/gem install rails
-# ln -sf ${path}/bin/bundle ${installation_path}/bin/bundle
-# ln -sf ${path}/bin/bundler ${installation_path}/bin/bundler
-# ln -sf ${path}/bin/erb ${installation_path}/bin/erb
-# ln -sf ${path}/bin/gem ${installation_path}/bin/gem
-# ln -sf ${path}/bin/irb ${installation_path}/bin/irb
-# ln -sf ${path}/bin/nokogiri ${installation_path}/bin/nokogiri
-# ln -sf ${path}/bin/rackup ${installation_path}/bin/rackup
-# ln -sf ${path}/bin/rails ${installation_path}/bin/rails
-# ln -sf ${path}/bin/rake ${installation_path}/bin/rake
-# ln -sf ${path}/bin/rdoc ${installation_path}/bin/rdoc
-# ln -sf ${path}/bin/ri ${installation_path}/bin/ri
-# ln -sf ${path}/bin/ruby ${installation_path}/bin/ruby
-# ln -sf ${path}/bin/sprockets ${installation_path}/bin/sprockets
-# ln -sf ${path}/bin/thor ${installation_path}/bin/thor
 
 # echo '================== git =================='
 # useradd -s /bin/git-shell ${user_git}
