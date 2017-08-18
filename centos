@@ -2,8 +2,8 @@
 
 # check permission
 if [ `id -u` != '0' ]; then
-	echo 'Error: You must be root to run this script'
-	exit 1
+  echo 'Error: You must be root to run this script'
+  exit 1
 fi
 
 # config
@@ -23,22 +23,28 @@ user_git='git'
 
 # installer
 function installer() {
-	wget -c $3
-	tar zxvf $2
-	mv $1 $4
+  wget -c $3
+  tar zxvf $2
+  mv $1 $4
 }
 
-# sourceInstaller
+# source installer
 function sourceInstaller() {
-	wget -c $3
-	tar zxvf $2
-	cd $1
-	./configure $4
-	make && make install
-	$5
-	cd ..
-	rm -rf $1 $2
+  wget -c $3
+  tar zxvf $2
+  cd $1
+  ./configure $4
+  make && make install
+  $5
+  cd ..
+  rm -rf $1 $2
 }
+
+# add path to profile
+# function addPathToProfile() {
+#   echo "export PATH=${$2}/bin:$PATH" > "/etc/profile.d/$1.sh"
+#   source /etc/profile.d/ruby.sh
+# }
 
 # go to root directory
 cd
@@ -89,30 +95,16 @@ sourceInstaller ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ru
 ${path}/bin/gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
 ${path}/bin/gem update --system
 ${path}/bin/gem install rails
-ln -sf ${path}/bin/bundle ${installation_path}/bin/bundle
-ln -sf ${path}/bin/bundler ${installation_path}/bin/bundler
-ln -sf ${path}/bin/erb ${installation_path}/bin/erb
-ln -sf ${path}/bin/gem ${installation_path}/bin/gem
-ln -sf ${path}/bin/irb ${installation_path}/bin/irb
-ln -sf ${path}/bin/nokogiri ${installation_path}/bin/nokogiri
-ln -sf ${path}/bin/rackup ${installation_path}/bin/rackup
-ln -sf ${path}/bin/rails ${installation_path}/bin/rails
-ln -sf ${path}/bin/rake ${installation_path}/bin/rake
-ln -sf ${path}/bin/rdoc ${installation_path}/bin/rdoc
-ln -sf ${path}/bin/ri ${installation_path}/bin/ri
-ln -sf ${path}/bin/ruby ${installation_path}/bin/ruby
-ln -sf ${path}/bin/sprockets ${installation_path}/bin/sprockets
-ln -sf ${path}/bin/thor ${installation_path}/bin/thor
+# echo "export PATH=${path}/bin:$PATH" > /etc/profile.d/ruby.sh
+# source /etc/profile.d/ruby.sh
 
 echo '================== passenger =================='
 name="release-${version_passenger}"
 tar="${name}.tar.gz"
 path="${installation_path}/passenger"
 installer ${name} ${tar} https://github.com/phusion/passenger/archive/${tar} ${path}
-echo '# passenger' >> /etc/bashrc
-echo "PATH=${path}/bin:$PATH" >> /etc/bashrc
-echo 'export PATH' >> /etc/bashrc
-source /etc/bashrc
+# echo "export PATH=${path}/bin:$PATH" > /etc/profile.d/passenger.sh
+# source /etc/profile.d/passenger.sh
 passenger_nginx_addon_dir=$($path/bin/passenger-config --nginx-addon-dir)
 
 echo '================== nginx =================='
@@ -120,7 +112,8 @@ name="nginx-${version_nginx}"
 tar="${name}.tar.gz"
 path="${installation_path}/nginx"
 sourceInstaller ${name} ${tar} http://nginx.org/download/${tar} " --prefix=${path} --user=${user_http} --group=${user_http} --with-http_gzip_static_module --with-http_image_filter_module=dynamic --with-http_ssl_module --with-http_stub_status_module --with-http_xslt_module=dynamic --with-mail=dynamic --with-stream=dynamic --with-compat --add-dynamic-module=${passenger_nginx_addon_dir}"
-ln -sf ${path}/sbin/nginx ${installation_path}/sbin/nginx
+# echo "export PATH=${path}/sbin:$PATH" > /etc/profile.d/nginx.sh
+# source /etc/profile.d/nginx.sh
 # setsebool -P httpd_can_network_connect=1
 # wget -c https://github.com/xiewulong/nginx/raw/master/www.service.sample
 # mv www.service.sample /usr/lib/systemd/system/www.service
@@ -130,12 +123,8 @@ name="php-${version_php}"
 tar="${name}.tar.gz"
 path="${installation_path}/php"
 sourceInstaller ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${user_http} --with-fpm-group=${user_http} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=${installation_path}/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
-ln -sf ${path}/bin/php ${installation_path}/bin/php
-ln -sf ${path}/bin/phpize ${installation_path}/bin/phpize
-ln -sf ${path}/bin/php-config ${installation_path}/bin/php-config
-ln -sf ${path}/bin/pear ${installation_path}/bin/pear
-ln -sf ${path}/bin/pecl ${installation_path}/bin/pecl
-ln -sf ${path}/sbin/php-fpm ${installation_path}/sbin/php-fpm
+# echo "export PATH=${path}/sbin:${path}/bin:$PATH" > /etc/profile.d/php.sh
+# source /etc/profile.d/php.sh
 cp ${path}/etc/php-fpm.conf.default ${path}/etc/php-fpm.conf
 cp ${path}/etc/php.ini-production ${path}/etc/php.ini
 cp ${path}/etc/php-fpm.d/www.conf.default ${path}/etc/php-fpm.d/www.conf
@@ -173,36 +162,18 @@ curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${instal
 # path="${installation_path}/node"
 # installer ${name} ${name}-linux-x64.tar.xz https://nodejs.org/dist/v${version_node}/${name}-linux-x64.tar.xz ${path}
 # sourceInstaller ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
-# ln -sf ${path}/bin/node ${installation_path}/bin/node
+# echo "export PATH=${path}/bin:$PATH" > /etc/profile.d/node.sh
+# source /etc/profile.d/node.sh
 # ${path}/bin/npm install -g --registry=https://registry.npm.taobao.org cnpm
 # ${path}/bin/cnpm install -g pm2
-# ln -sf ${path}/bin/cnpm ${installation_path}/bin/cnpm
-# ln -sf ${path}/bin/npm ${installation_path}/bin/npm
-# ln -sf ${path}/bin/pm2 ${installation_path}/bin/pm2
-# ln -sf ${path}/bin/pm2-daemon ${installation_path}/bin/pm2-daemon
-# ln -sf ${path}/bin/pm2-dev ${installation_path}/bin/pm2-dev
-# ln -sf ${path}/bin/pm2-docker ${installation_path}/bin/pm2-docker
-# ln -sf ${path}/bin/pm2-runtime ${installation_path}/bin/pm2-runtime
 
 # echo '================== mongodb =================='
 # name="mongodb-linux-x86_64-rhel70-${version_mongodb}"
 # tar="${name}.tgz"
 # path="${installation_path}/mongodb"
 # installer ${name} ${tar} https://fastdl.mongodb.org/linux/${tar} ${path}
-# ln -sf ${path}/bin/bsondump ${installation_path}/bin/bsondump
-# ln -sf ${path}/bin/mongo ${installation_path}/bin/mongo
-# ln -sf ${path}/bin/mongod ${installation_path}/bin/mongod
-# ln -sf ${path}/bin/mongodump ${installation_path}/bin/mongodump
-# ln -sf ${path}/bin/mongoexport ${installation_path}/bin/mongoexport
-# ln -sf ${path}/bin/mongofiles ${installation_path}/bin/mongofiles
-# ln -sf ${path}/bin/mongoimport ${installation_path}/bin/mongoimport
-# ln -sf ${path}/bin/mongooplog ${installation_path}/bin/mongooplog
-# ln -sf ${path}/bin/mongoperf ${installation_path}/bin/mongoperf
-# ln -sf ${path}/bin/mongoreplay ${installation_path}/bin/mongoreplay
-# ln -sf ${path}/bin/mongorestore ${installation_path}/bin/mongorestore
-# ln -sf ${path}/bin/mongos ${installation_path}/bin/mongos
-# ln -sf ${path}/bin/mongostat ${installation_path}/bin/mongostat
-# ln -sf ${path}/bin/mongotop ${installation_path}/bin/mongotop
+# echo "export PATH=${path}/bin:$PATH" > /etc/profile.d/mongodb.sh
+# source /etc/profile.d/mongodb.sh
 
 # echo '================== python 3 =================='
 # name="Python-${version_python3}"
