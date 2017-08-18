@@ -99,10 +99,10 @@ ${path}/bin/gem install rails
 # source /etc/profile.d/ruby.sh
 
 echo '================== passenger =================='
-name="release-${version_passenger}"
+name="passenger-${version_passenger}"
 tar="${name}.tar.gz"
 path="${installation_path}/passenger"
-installer ${name} ${tar} https://github.com/phusion/passenger/archive/${tar} ${path}
+installer ${name} ${tar} http://s3.amazonaws.com/phusion-passenger/releases/${tar} ${path}
 # echo "export PATH=${path}/bin:$PATH" > /etc/profile.d/passenger.sh
 # source /etc/profile.d/passenger.sh
 passenger_nginx_addon_dir=$($path/bin/passenger-config --nginx-addon-dir)
