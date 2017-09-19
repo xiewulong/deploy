@@ -40,12 +40,6 @@ function sourceInstaller() {
   rm -rf $1 $2
 }
 
-# add path to profile
-# function addPathToProfile() {
-#   echo "export PATH=${$2}/bin:$PATH" > "/etc/profile.d/$1.sh"
-#   source /etc/profile.d/ruby.sh
-# }
-
 # go to root directory
 cd
 
@@ -95,7 +89,7 @@ sourceInstaller ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ru
 ${path}/bin/gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
 ${path}/bin/gem update --system
 ${path}/bin/gem install rails
-# echo "export PATH=${path}/bin:$PATH" > /etc/profile.d/ruby.sh
+# echo "export PATH=${path}/bin:"'$PATH' > /etc/profile.d/ruby.sh
 # source /etc/profile.d/ruby.sh
 
 echo '================== passenger =================='
@@ -103,7 +97,7 @@ name="passenger-${version_passenger}"
 tar="${name}.tar.gz"
 path="${installation_path}/passenger"
 installer ${name} ${tar} http://s3.amazonaws.com/phusion-passenger/releases/${tar} ${path}
-# echo "export PATH=${path}/bin:$PATH" > /etc/profile.d/passenger.sh
+# echo "export PATH=${path}/bin:"'$PATH' > /etc/profile.d/passenger.sh
 # source /etc/profile.d/passenger.sh
 passenger_nginx_addon_dir=$($path/bin/passenger-config --nginx-addon-dir)
 
@@ -112,7 +106,7 @@ name="nginx-${version_nginx}"
 tar="${name}.tar.gz"
 path="${installation_path}/nginx"
 sourceInstaller ${name} ${tar} http://nginx.org/download/${tar} " --prefix=${path} --user=${user_http} --group=${user_http} --with-http_gzip_static_module --with-http_image_filter_module=dynamic --with-http_ssl_module --with-http_stub_status_module --with-http_xslt_module=dynamic --with-mail=dynamic --with-stream=dynamic --with-compat --add-dynamic-module=${passenger_nginx_addon_dir}"
-# echo "export PATH=${path}/sbin:$PATH" > /etc/profile.d/nginx.sh
+# echo "export PATH=${path}/sbin:"'$PATH' > /etc/profile.d/nginx.sh
 # source /etc/profile.d/nginx.sh
 # setsebool -P httpd_can_network_connect=1
 # wget -c https://github.com/xiewulong/nginx/raw/master/www.service.sample
@@ -123,7 +117,7 @@ name="php-${version_php}"
 tar="${name}.tar.gz"
 path="${installation_path}/php"
 sourceInstaller ${name} ${tar} http://cn2.php.net/distributions/${tar} " --prefix=${path} --with-config-file-path=${path}/etc --enable-fpm --with-fpm-user=${user_http} --with-fpm-group=${user_http} --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=${installation_path}/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --enable-intl --enable-pcntl --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --enable-opcache --with-xsl" "cp php.ini-development php.ini-production ${path}/etc/"
-# echo "export PATH=${path}/sbin:${path}/bin:$PATH" > /etc/profile.d/php.sh
+# echo "export PATH=${path}/sbin:${path}/bin:"'$PATH' > /etc/profile.d/php.sh
 # source /etc/profile.d/php.sh
 cp ${path}/etc/php-fpm.conf.default ${path}/etc/php-fpm.conf
 cp ${path}/etc/php.ini-production ${path}/etc/php.ini
@@ -162,7 +156,7 @@ curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${instal
 # path="${installation_path}/node"
 # installer ${name} ${name}-linux-x64.tar.xz https://nodejs.org/dist/v${version_node}/${name}-linux-x64.tar.xz ${path}
 # sourceInstaller ${name} ${tar} https://nodejs.org/dist/v${version_node}/${tar} " --prefix=${path}"
-# echo "export PATH=${path}/bin:$PATH" > /etc/profile.d/node.sh
+# echo "export PATH=${path}/bin:"'$PATH' > /etc/profile.d/node.sh
 # source /etc/profile.d/node.sh
 # ${path}/bin/npm install -g --registry=https://registry.npm.taobao.org cnpm
 # ${path}/bin/cnpm install -g pm2
@@ -172,7 +166,7 @@ curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${instal
 # tar="${name}.tgz"
 # path="${installation_path}/mongodb"
 # installer ${name} ${tar} https://fastdl.mongodb.org/linux/${tar} ${path}
-# echo "export PATH=${path}/bin:$PATH" > /etc/profile.d/mongodb.sh
+# echo "export PATH=${path}/bin:"'$PATH' > /etc/profile.d/mongodb.sh
 # source /etc/profile.d/mongodb.sh
 
 # echo '================== python 3 =================='
