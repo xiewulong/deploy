@@ -138,7 +138,7 @@ wget -c https://github.com/xiewulong/deploy/raw/master/systemd/php-fpm.service
 mv php-fpm.service /usr/lib/systemd/system/
 
 echo '================== composer =================='
-curl -sS https://getcomposer.org/sourceInstaller | php -- --install-dir=${installation_path}/bin --filename=composer
+curl -sS https://getcomposer.org/installer | php -- --install-dir=${installation_path}/bin --filename=composer
 # composer global require 'fxp/composer-asset-plugin:~1.2.0'
 
 # echo '================== docker =================='
