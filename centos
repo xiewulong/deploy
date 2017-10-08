@@ -159,7 +159,7 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=${installation
 # echo "export PATH=${path}/bin:"'$PATH' > /etc/profile.d/node.sh
 # source /etc/profile.d/node.sh
 # ${path}/bin/npm install -g --registry=https://registry.npm.taobao.org cnpm
-# ${path}/bin/cnpm install -g pm2
+# ${path}/bin/cnpm install -g pm2 yarn
 
 # echo '================== mongodb =================='
 # name="mongodb-linux-x86_64-rhel70-${version_mongodb}"
