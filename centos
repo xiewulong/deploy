@@ -47,6 +47,9 @@ cd
 # echo '================== hostname =================='
 # hostnamectl set-hostname ${user_http}
 
+# echo '================== tmout =================='
+# echo 'TMOUT=600' > /etc/profile.d/tmout.sh
+
 echo '================== add repo && install tools && update && upgrade =================='
 # yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-${version_epel}.noarch.rpm
 yum -y install epel-release yum-utils
