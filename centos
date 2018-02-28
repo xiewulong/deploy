@@ -145,7 +145,7 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=${installation
 # echo '================== docker =================='
 # curl -fsSL https://get.docker.com/ | sh
 # usermod -aG docker username
-# echo '{"registry-mirrors":[],"insecure-registries":[],"exec-opts":[]}' > /etc/docker/daemon.json
+# echo '{"registry-mirrors":[],"insecure-registries":[],"exec-opts":["native.cgroupdriver=systemd"]}' > /etc/docker/daemon.json
 # https://cr.console.aliyun.com/#/accelerator
 
 # echo '================== docker-compose =================='
