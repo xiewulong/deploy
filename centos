@@ -16,7 +16,7 @@ version_nginx='1.12.2'
 version_php='7.2.1'
 version_docker_compose='1.19.0'
 version_docker_machine='v0.13.0'
-version_node='8.9.4'
+version_node='8.10.0'
 version_mongodb='3.6.2'
 version_python3='3.6.4'
 user_http='www'
@@ -93,6 +93,7 @@ sourceInstaller ${name} ${tar} https://cache.ruby-lang.org/pub/ruby/${version_ru
 ${path}/bin/gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
 ${path}/bin/gem update --system
 ${path}/bin/gem install rails
+bundle config mirror.https://rubygems.org https://gems.ruby-china.org
 # echo "export PATH=${path}/bin:"'$PATH' > /etc/profile.d/ruby.sh
 # source /etc/profile.d/ruby.sh
 
