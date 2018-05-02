@@ -10,9 +10,9 @@ fi
 dir=$(cd `dirname $0`; pwd)
 installation_path='/usr/local'
 # version_epel='7-9'
-version_ruby='2.5.0'
-version_passenger='5.2.1'
-version_nginx='1.12.2'
+version_ruby='2.5.1'
+version_passenger='5.2.3'
+version_nginx='1.14.0'
 version_php='7.2.1'
 version_docker_compose='1.19.0'
 version_docker_machine='v0.13.0'
