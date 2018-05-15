@@ -11,7 +11,7 @@ dir=$(cd `dirname $0`; pwd)
 installation_path='/usr/local'
 # version_epel='7-9'
 version_ruby='2.5.1'
-version_passenger='5.2.3'
+version_passenger='5.3.1'
 version_nginx='1.14.0'
 version_php='7.2.1'
 version_docker_compose='1.19.0'
@@ -113,7 +113,7 @@ echo '================== nginx =================='
 name="nginx-${version_nginx}"
 tar="${name}.tar.gz"
 path="${installation_path}/nginx"
-sourceInstaller ${name} ${tar} http://nginx.org/download/${tar} " --prefix=${path} --user=${user_http} --group=${user_http} --with-http_gzip_static_module --with-http_image_filter_module=dynamic --with-http_ssl_module --with-http_stub_status_module --with-http_xslt_module=dynamic --with-mail=dynamic --with-stream=dynamic --with-compat --add-dynamic-module=${passenger_nginx_addon_dir}"
+sourceInstaller ${name} ${tar} http://nginx.org/download/${tar} " --prefix=${path} --user=${user_http} --group=${user_http} --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module=dynamic --with-http_image_filter_module=dynamic --with-http_geoip_module=dynamic --with-threads --with-stream --with-stream_ssl_module --with-stream_ssl_preread_module --with-stream_realip_module --with-stream_geoip_module=dynamic --with-http_slice_module --with-mail --with-mail_ssl_module --with-compat --with-file-aio --with-http_v2_module --add-dynamic-module=${passenger_nginx_addon_dir}"
 # echo "export PATH=${path}/sbin:"'$PATH' > /etc/profile.d/nginx.sh
 # source /etc/profile.d/nginx.sh
 # setsebool -P httpd_can_network_connect=1
