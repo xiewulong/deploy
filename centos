@@ -118,8 +118,8 @@ sourceInstaller ${name} ${tar} http://nginx.org/download/${tar} " --prefix=${pat
 # echo "export PATH=${path}/sbin:"'$PATH' > /etc/profile.d/nginx.sh
 # source /etc/profile.d/nginx.sh
 # setsebool -P httpd_can_network_connect=1
-# wget -c https://github.com/xiewulong/nginx/raw/master/www.service.sample
-# mv www.service.sample /usr/lib/systemd/system/www.service
+# wget -c https://github.com/xiewulong/nginx/raw/master/nginx.service.sample
+# mv nginx.service.sample /usr/lib/systemd/system/nginx.service
 
 # ================== Php ==================
 name="php-${version_php}"
@@ -197,8 +197,8 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=${installation
 # ================== Systemctl ==================
 # systemctl enable vsftpd
 # systemctl start vsftpd
-# systemctl enable www
-# systemctl start www
+# systemctl enable nginx
+# systemctl start nginx
 systemctl enable php-fpm
 systemctl start php-fpm
 # systemctl enable docker
