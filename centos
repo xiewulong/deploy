@@ -1,12 +1,12 @@
 #!/bin/bash
 
-set -ex
-
 # Check permission
 if [ `id -u` != '0' ]; then
   echo 'Error: You must be root to run this script'
   exit 1
 fi
+
+set -ex
 
 # Config
 dir=$(cd `dirname $0`; pwd)
