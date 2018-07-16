@@ -1,4 +1,5 @@
 #!/bin/bash
+LANG_BASIC_SETUP="Basic setup"
 LANG_COMMON_INSTALLATION_PATH="Common installation path"
 LANG_DOCKER_COMPOSE_VERSION="Docker compose version"
 LANG_GIT_REPOSITORY_USERNAME="Git repository username"
@@ -21,3 +22,5 @@ LANG_RUBY_VERSION="Ruby version"
 LANG_SECONDS="Seconds"
 LANG_TIMEOUT="Idle waiting time"
 LANG_USERNAME="Username"
+LANG_YUM_UPDATE="Yum update"
+LANG_YUM_UPGRADE="Yum upgrade"

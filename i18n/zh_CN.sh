@@ -1,4 +1,5 @@
 #!/bin/bash
+LANG_BASIC_SETUP="基本设置"
 LANG_COMMON_INSTALLATION_PATH="公共安装路径"
 LANG_DOCKER_COMPOSE_VERSION="Docker compose版本号"
 LANG_GIT_REPOSITORY_USERNAME="Git仓库用户名"
@@ -21,3 +22,5 @@ LANG_RUBY_VERSION="Ruby版本号"
 LANG_SECONDS="秒"
 LANG_TIMEOUT="空闲等待时间"
 LANG_USERNAME="用户名"
+LANG_YUM_UPDATE="Yum更新(update)"
+LANG_YUM_UPGRADE="Yum升级(upgrade)"
