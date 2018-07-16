@@ -48,5 +48,9 @@ install_ruby() {
   rm -rf "ruby-$RUBY_VERSION" "ruby-$RUBY_VERSION.tar.gz"
   echo "export PATH=$RUBY_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/ruby.sh
   source /etc/profile.d/ruby.sh
+  # gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
+  # gem update --system
+  # gem install rails
+  # bundle config mirror.https://rubygems.org https://gems.ruby-china.org
   set +x
 }

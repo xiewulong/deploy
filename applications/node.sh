@@ -45,5 +45,6 @@ install_node() {
   rm -rf "node-v$NODE_VERSION-linux-x64.tar.xz"
   echo "export PATH=$NODE_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/node.sh
   source /etc/profile.d/node.sh
+  # npm install -g --registry=https://registry.npm.taobao.org cnpm npm@latest yarn
   set +x
 }
