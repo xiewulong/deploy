@@ -6,8 +6,6 @@ if [ `id -u` != '0' ]; then
   exit 1
 fi
 
-set -ex
-
 # Config
 dir=$(cd `dirname $0`; pwd)
 installation_path='/usr/local'
@@ -41,6 +39,8 @@ function sourceInstaller() {
   cd ..
   rm -rf $1 $2
 }
+
+set -ex
 
 # Go to root directory
 cd
