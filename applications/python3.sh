@@ -42,11 +42,11 @@ install_python3() {
   curl --compressed -fLO "https://www.python.org/ftp/python/$PYTHON3_VERSION/Python-${PYTHON3_VERSION}.tgz"
   tar zxvf "Python-${PYTHON3_VERSION}.tgz"
   cd "Python-${PYTHON3_VERSION}"
-  ./configure  --prefix="$PYTHON3_INSTALLATION_PATH"
+  ./configure --prefix="$PYTHON3_INSTALLATION_PATH"
   make && make install
   cd ..
   rm -rf "Python-${PYTHON3_VERSION}" "Python-${PYTHON3_VERSION}.tgz"
-  # echo "export PATH=$PYTHON3_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/python3.sh
-  # source /etc/profile.d/python3.sh
+  echo "export PATH=$PYTHON3_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/python3.sh
+  source /etc/profile.d/python3.sh
   set +x
 }

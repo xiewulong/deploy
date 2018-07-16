@@ -42,7 +42,7 @@ install_ruby() {
   curl --compressed -fLO "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz"
   tar zxvf "ruby-$RUBY_VERSION.tar.gz"
   cd "ruby-$RUBY_VERSION"
-  ./configure  --prefix="$RUBY_INSTALLATION_PATH"
+  ./configure --prefix="$RUBY_INSTALLATION_PATH"
   make && make install
   cd ..
   rm -rf "ruby-$RUBY_VERSION" "ruby-$RUBY_VERSION.tar.gz"
