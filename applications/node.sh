@@ -5,7 +5,7 @@ set -e
 # Default options
 DEFAULT_INSTALLATION_PATH=/usr/local
 DEFAULT_NODE=Y
-DEFAULT_NODE_VERSION=8.11.2
+DEFAULT_NODE_VERSION=8.11.3
 
 # Options
 if [ -z $INSTALLATION_PATH ]; then
