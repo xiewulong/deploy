@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Check permission
-if [ `id -u` != '0' ]; then
-  echo 'Error: You must be root to run this script'
-  exit 1
-fi
-
 set -e
 
 # Default options
@@ -15,7 +9,7 @@ DEFAULT_PASSENGER_VERSION=5.3.1
 
 # Options
 if [ -z $INSTALLATION_PATH ]; then
-  read -p "Installation path: ($DEFAULT_INSTALLATION_PATH) " INSTALLATION_PATH
+  read -p "$LANG_COMMON_INSTALLATION_PATH: ($DEFAULT_INSTALLATION_PATH) " INSTALLATION_PATH
 fi
 if [ -z $INSTALLATION_PATH ]; then
   INSTALLATION_PATH=$DEFAULT_INSTALLATION_PATH
@@ -27,14 +21,14 @@ source applications/ruby.sh
 
 if [ -z $PASSENGER ]; then
   typeset -u PASSENGER
-  read -p "Install passenger[Y/N]: ($DEFAULT_PASSENGER) " PASSENGER
+  read -p "$LANG_INSTALL_PASSENGER[Y/N]: ($DEFAULT_PASSENGER) " PASSENGER
 fi
 if [ -z $PASSENGER ]; then
   PASSENGER=$DEFAULT_PASSENGER
 fi
 if [ $PASSENGER == 'Y' ]; then
   if [ -z $PASSENGER_VERSION ]; then
-    read -p "Passenger version: ($DEFAULT_PASSENGER_VERSION) " PASSENGER_VERSION
+    read -p "$LANG_PASSENGER_VERSION: ($DEFAULT_PASSENGER_VERSION) " PASSENGER_VERSION
   fi
   if [ -z $PASSENGER_VERSION ]; then
     PASSENGER_VERSION=$DEFAULT_PASSENGER_VERSION
