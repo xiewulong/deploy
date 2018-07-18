@@ -94,36 +94,47 @@ done
 cd $CSD/tmp
 
 # Install
-set -x
-
 if [ $BASIC_SETUP == 'Y' ]; then
   if [ -n "$HOSTNAME" ]; then
+    set -x
     hostnamectl set-hostname $HOSTNAME
+    set +x
   fi
   if [ -n "$TIMEOUT" ]; then
+    set -x
     echo "TMOUT=$TIMEOUT" > /etc/profile.d/tmout.sh
+    set +x
   fi
   if [ -n "$USERNAME" ]; then
+    set -x
     useradd $USERNAME
     # chcon -Rt httpd_sys_rw_content_t /home/$USERNAME
+    set +x
   fi
 fi
 
 if [ $YUM_UPDATE == 'Y' ]; then
+  set -x
   yum -y update
+  set +x
 fi
 if [ $YUM_UPGRADE == 'Y' ]; then
+  set -x
   yum -y upgrade
+  set +x
 fi
 if [ $COMMON_LIBRARY == 'Y' ]; then
+  set -x
   yum -y install bash-completion curl gcc gcc-c++ lrzsz make net-tools ntp redhat-lsb vim* wget
   # yum -y install zip unzip emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2 bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel GeoIP-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel pcre-devel zlib-devel ImageMagick-devel \
   # yum -y installcairo cairo-devel cairomm-devel giflib-devel libjpeg-turbo-devel pango pango-devel pangomm pangomm-devel \
   # yum -y installsubversion git mariadb mariadb-devel re2c
   # yum -y install php-cli php-fpm php-bcmath php-gd php-imap php-intl php-mbstring php-mcrypt php-mysql php-pgsql php-xml php-pclzip php-pecl-apcu php-pecl-imagick php-pecl-memcache php-pecl-memcached php-pecl-sphinx
   # yum -y install ftp golang mariadb-server nodejs npm pptpd ruby siege sqlite-devel vsftpd
+  set +x
 fi
 
+set -x
 yum clean all
 set +x
 
