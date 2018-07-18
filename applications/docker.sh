@@ -54,7 +54,7 @@ install_docker() {
   fi
 
   set -x
-  curl -fsSL https://get.docker.com/ | sh
+  curl -fsSL https://get.docker.com/ | sh # -s docker --mirror Aliyun
   # usermod -aG docker username
   # echo '{"registry-mirrors":[],"insecure-registries":[],"exec-opts":["native.cgroupdriver=systemd"]}' > /etc/docker/daemon.json
   # https://cr.console.aliyun.com/#/accelerator
