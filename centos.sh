@@ -25,7 +25,6 @@ set -e
 # Applications
 APPLICATIONS=(
   docker
-  filebeat
   git
   ruby
   nginx
