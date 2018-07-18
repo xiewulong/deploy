@@ -1,11 +1,17 @@
 #!/bin/bash
 
+# Current work directory
+CWD=`pwd`
+
+# Current script directory
+CSD=$(cd `dirname $0`; pwd)
+
 # I18n
 CURRENT_LANG=${LANG%.*}
-if [ -f "i18n/$CURRENT_LANG.sh" ]; then
-  source "i18n/$CURRENT_LANG.sh"
+if [ -f "$CSD/i18n/$CURRENT_LANG.sh" ]; then
+  source "$CSD/i18n/$CURRENT_LANG.sh"
 else
-  source "i18n/en.sh"
+  source "$CSD/i18n/en.sh"
 fi
 
 # Check permission
@@ -19,6 +25,7 @@ set -e
 # Applications
 APPLICATIONS=(
   docker
+  filebeat
   git
   ruby
   nginx
@@ -27,11 +34,11 @@ APPLICATIONS=(
 )
 
 # Default options
-DEFAULT_BASIC_SETUP=Y
+DEFAULT_BASIC_SETUP=N
 DEFAULT_COMMON_LIBRARY=N
 DEFAULT_INSTALLATION_PATH=/usr/local
-DEFAULT_YUM_UPDATE=Y
-DEFAULT_YUM_UPGRADE=Y
+DEFAULT_YUM_UPDATE=N
+DEFAULT_YUM_UPGRADE=N
 
 # Options
 if [ -z $BASIC_SETUP ]; then
@@ -80,34 +87,36 @@ fi
 
 for((i = 0, len = ${#APPLICATIONS[*]}; i < len; i++))
 do
-  source "applications/${APPLICATIONS[$i]}.sh"
+  source "$CSD/applications/${APPLICATIONS[$i]}.sh"
 done
 
-# Current work directory
-CWD=$(cd `dirname $0`; pwd)
-
-# Go to current user home directory
-cd
+# Go to tmp directory
+cd $CSD/tmp
 
 # Install
 set -x
 
-if [ -n "$HOSTNAME" ]; then
-  hostnamectl set-hostname $HOSTNAME
-fi
-if [ -n "$TIMEOUT" ]; then
-  echo "TMOUT=$TIMEOUT" > /etc/profile.d/tmout.sh
-fi
-if [ -n "$USERNAME" ]; then
-  useradd $USERNAME
-  # chcon -Rt httpd_sys_rw_content_t /home/$USERNAME
+if [ $BASIC_SETUP == 'Y' ]; then
+  if [ -n "$HOSTNAME" ]; then
+    hostnamectl set-hostname $HOSTNAME
+  fi
+  if [ -n "$TIMEOUT" ]; then
+    echo "TMOUT=$TIMEOUT" > /etc/profile.d/tmout.sh
+  fi
+  if [ -n "$USERNAME" ]; then
+    useradd $USERNAME
+    # chcon -Rt httpd_sys_rw_content_t /home/$USERNAME
+  fi
 fi
 
-yum -y update
-yum -y upgrade
-
+if [ $YUM_UPDATE == 'Y' ]; then
+  yum -y update
+fi
+if [ $YUM_UPGRADE == 'Y' ]; then
+  yum -y upgrade
+fi
 if [ $COMMON_LIBRARY == 'Y' ]; then
-  yum -y install autoconf bash-completion curl gcc gcc-c++ lrzsz make net-tools ntp redhat-lsb vim* wget
+  yum -y install bash-completion curl gcc gcc-c++ lrzsz make net-tools ntp redhat-lsb vim* wget
   # yum -y install zip unzip emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2 bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel GeoIP-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel pcre-devel zlib-devel ImageMagick-devel \
   # yum -y installcairo cairo-devel cairomm-devel giflib-devel libjpeg-turbo-devel pango pango-devel pangomm pangomm-devel \
   # yum -y installsubversion git mariadb mariadb-devel re2c
@@ -115,16 +124,13 @@ if [ $COMMON_LIBRARY == 'Y' ]; then
   # yum -y install ftp golang mariadb-server nodejs npm pptpd ruby siege sqlite-devel vsftpd
 fi
 
+yum clean all
 set +x
 
 for((i = 0, len = ${#APPLICATIONS[*]}; i < len; i++))
 do
   install_${APPLICATIONS[$i]}
 done
-
-set -x
-yum clean all
-set +x
 
 # Back to current work directory
 cd $CWD

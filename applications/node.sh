@@ -39,10 +39,10 @@ install_node() {
   fi
 
   set -x
-  curl --compressed -fLO "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz"
+  curl --compressed -fLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
   tar xvf "node-v$NODE_VERSION-linux-x64.tar.xz"
   mv "node-v$NODE_VERSION-linux-x64" "$NODE_INSTALLATION_PATH"
-  rm -rf "node-v$NODE_VERSION-linux-x64.tar.xz"
+  # rm -rf "node-v$NODE_VERSION-linux-x64.tar.xz"
   echo "export PATH=$NODE_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/node.sh
   source /etc/profile.d/node.sh
   # npm install -g --registry=https://registry.npm.taobao.org cnpm npm@latest yarn

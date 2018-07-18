@@ -47,7 +47,7 @@ install_passenger() {
   curl --compressed -fLO "http://s3.amazonaws.com/phusion-passenger/releases/passenger-$PASSENGER_VERSION.tar.gz"
   tar zxvf "passenger-$PASSENGER_VERSION.tar.gz"
   mv "passenger-$PASSENGER_VERSION" "$PASSENGER_INSTALLATION_PATH"
-  rm -rf "passenger-$PASSENGER_VERSION.tar.gz"
+  # rm -rf "passenger-$PASSENGER_VERSION.tar.gz"
   echo "export PATH=$PASSENGER_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/passenger.sh
   source /etc/profile.d/passenger.sh
   set +x
