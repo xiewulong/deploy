@@ -1,16 +1,10 @@
 #!/bin/bash
 
-# Check permission
-if [ `id -u` != '0' ]; then
-  echo 'Error: You must be root to run this script'
-  exit 1
-fi
-
 set -e
 
 # Default options
 DEFAULT_INSTALLATION_PATH=/usr/local
-DEFAULT_DOCKER=Y
+DEFAULT_DOCKER=N
 DEFAULT_DOCKER_COMPOSE=Y
 DEFAULT_DOCKER_COMPOSE_VERSION=1.22.0-rc2
 

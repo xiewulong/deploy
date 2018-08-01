@@ -1,15 +1,9 @@
 #!/bin/bash
 
-# Check permission
-if [ `id -u` != '0' ]; then
-  echo 'Error: You must be root to run this script'
-  exit 1
-fi
-
 set -e
 
 # Default options
-DEFAULT_GIT=Y
+DEFAULT_GIT=N
 DEFAULT_GIT_REPOSITORY=N
 DEFAULT_GIT_REPOSITORY_USERNAME=git
 
