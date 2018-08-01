@@ -62,6 +62,7 @@ install_node() {
   fi
   wget -c "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
   tar xvf "node-v$NODE_VERSION-linux-x64.tar.xz"
+  chown root:root -R "node-v$NODE_VERSION-linux-x64"
   mv "node-v$NODE_VERSION-linux-x64" "$NODE_INSTALLATION_PATH"
   echo "export PATH=$NODE_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/node.sh
   source /etc/profile.d/node.sh
