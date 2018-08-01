@@ -26,7 +26,7 @@ if [ -z $NGINX ]; then
 fi
 
 NGINX_INSTALLATION_PATH="$INSTALLATION_PATH/nginx"
-if [[ $NGINX == 'Y' && -d NGINX_INSTALLATION_PATH ]]; then
+if [[ $NGINX == 'Y' && -d "$NGINX_INSTALLATION_PATH" ]]; then
   typeset -u NGINX
   read -p "$LANG_NGINX_OVERWRITE[Y/N]: ($DEFAULT_NGINX_OVERWRITE) " NGINX
   if [ -z $NGINX ]; then

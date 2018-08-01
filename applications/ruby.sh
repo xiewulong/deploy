@@ -25,7 +25,7 @@ if [ -z $RUBY ]; then
 fi
 
 RUBY_INSTALLATION_PATH="$INSTALLATION_PATH/ruby"
-if [[ $RUBY == 'Y' && -d RUBY_INSTALLATION_PATH ]]; then
+if [[ $RUBY == 'Y' && -d "$RUBY_INSTALLATION_PATH" ]]; then
   typeset -u RUBY
   read -p "$LANG_RUBY_OVERWRITE[Y/N]: ($DEFAULT_RUBY_OVERWRITE) " RUBY
   if [ -z $RUBY ]; then

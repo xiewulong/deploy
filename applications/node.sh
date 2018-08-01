@@ -27,7 +27,7 @@ if [ -z $NODE ]; then
 fi
 
 NODE_INSTALLATION_PATH="$INSTALLATION_PATH/node"
-if [[ $NODE == 'Y' && -d NODE_INSTALLATION_PATH ]]; then
+if [[ $NODE == 'Y' && -d "$NODE_INSTALLATION_PATH" ]]; then
   typeset -u NODE
   read -p "$LANG_NODE_OVERWRITE[Y/N]: ($DEFAULT_NODE_OVERWRITE) " NODE
   if [ -z $NODE ]; then

@@ -25,7 +25,7 @@ if [ -z $PYTHON3 ]; then
 fi
 
 PYTHON3_INSTALLATION_PATH="$INSTALLATION_PATH/python3"
-if [[ $PYTHON3 == 'Y' && -d PYTHON3_INSTALLATION_PATH ]]; then
+if [[ $PYTHON3 == 'Y' && -d "$PYTHON3_INSTALLATION_PATH" ]]; then
   typeset -u PYTHON3
   read -p "$LANG_PYTHON3_OVERWRITE[Y/N]: ($DEFAULT_PYTHON3_OVERWRITE) " PYTHON3
   if [ -z $PYTHON3 ]; then
