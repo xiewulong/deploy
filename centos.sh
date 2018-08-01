@@ -124,7 +124,7 @@ if [ $YUM_UPGRADE == 'Y' ]; then
 fi
 if [ $COMMON_LIBRARY == 'Y' ]; then
   set -x
-  yum -y install bash-completion curl gcc gcc-c++ lrzsz make net-tools ntp redhat-lsb vim* wget
+  yum -y install bash-completion gcc gcc-c++ lrzsz make net-tools ntp redhat-lsb vim*
   # yum -y install zip unzip emacs libcap diffutils ca-certificates psmisc libtool-libs file flex bison patch bzip2 bzip2-devel c-ares-devel curl-devel e2fsprogs-devel gd-devel gettext-devel GeoIP-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libcurl-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libxml2-devel libXpm-devel libxslt-devel ncurses-devel openssl-devel pcre-devel zlib-devel ImageMagick-devel \
   # yum -y installcairo cairo-devel cairomm-devel giflib-devel libjpeg-turbo-devel pango pango-devel pangomm pangomm-devel \
   # yum -y installsubversion git mariadb mariadb-devel re2c
