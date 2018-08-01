@@ -54,9 +54,13 @@ install_node() {
   if [ -d "$NODE_INSTALLATION_PATH" ]; then
     mv "$NODE_INSTALLATION_PATH" "$NODE_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
-  if [ ! -f "node-v$NODE_VERSION-linux-x64.tar.xz" ]; then
-    curl --compressed -fLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
+  # if [ ! -f "node-v$NODE_VERSION-linux-x64.tar.xz" ]; then
+  #   curl --compressed -fLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
+  # else
+  if [ -f "node-v$NODE_VERSION-linux-x64.tar.xz" ]; then
+    rm -rf "node-v$NODE_VERSION-linux-x64"
   fi
+  wget -c "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
   tar xvf "node-v$NODE_VERSION-linux-x64.tar.xz"
   mv "node-v$NODE_VERSION-linux-x64" "$NODE_INSTALLATION_PATH"
   echo "export PATH=$NODE_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/node.sh

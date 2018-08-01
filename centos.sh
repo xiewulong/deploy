@@ -134,6 +134,7 @@ if [ $COMMON_LIBRARY == 'Y' ]; then
 fi
 
 set -x
+yum -y install wget
 yum clean all
 set +x
 

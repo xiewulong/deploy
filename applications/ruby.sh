@@ -52,11 +52,13 @@ install_ruby() {
   if [ -d "$RUBY_INSTALLATION_PATH" ]; then
     mv "$RUBY_INSTALLATION_PATH" "$RUBY_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
-  if [ ! -f "ruby-$RUBY_VERSION.tar.gz" ]; then
-    curl --compressed -fLO "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz"
-  else
+  # if [ ! -f "ruby-$RUBY_VERSION.tar.gz" ]; then
+  #   curl --compressed -fLO "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz"
+  # else
+  if [ -f "ruby-$RUBY_VERSION.tar.gz" ]; then
     rm -rf "ruby-$RUBY_VERSION"
   fi
+  wget -c "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz"
   tar zxvf "ruby-$RUBY_VERSION.tar.gz"
   cd "ruby-$RUBY_VERSION"
   ./configure --prefix="$RUBY_INSTALLATION_PATH"

@@ -52,11 +52,13 @@ install_python3() {
   if [ -d "$PYTHON3_INSTALLATION_PATH" ]; then
     mv "$PYTHON3_INSTALLATION_PATH" "$PYTHON3_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
-  if [ ! -f "Python-$PYTHON3_VERSION.tgz" ]; then
-    curl --compressed -fLO "https://www.python.org/ftp/python/$PYTHON3_VERSION/Python-$PYTHON3_VERSION.tgz"
-  else
+  # if [ ! -f "Python-$PYTHON3_VERSION.tgz" ]; then
+  #   curl --compressed -fLO "https://www.python.org/ftp/python/$PYTHON3_VERSION/Python-$PYTHON3_VERSION.tgz"
+  # else
+  if [ -f "Python-$PYTHON3_VERSION.tgz" ]; then
     rm -rf "Python-$PYTHON3_VERSION"
   fi
+  wget -c "https://www.python.org/ftp/python/$PYTHON3_VERSION/Python-$PYTHON3_VERSION.tgz"
   tar zxvf "Python-$PYTHON3_VERSION.tgz"
   cd "Python-$PYTHON3_VERSION"
   ./configure --prefix="$PYTHON3_INSTALLATION_PATH"

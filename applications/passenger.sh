@@ -57,9 +57,13 @@ install_passenger() {
   if [ -d "$PASSENGER_INSTALLATION_PATH" ]; then
     mv "$PASSENGER_INSTALLATION_PATH" "$PASSENGER_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
-  if [ ! -f "passenger-$PASSENGER_VERSION.tar.gz" ]; then
-    curl --compressed -fLO "http://s3.amazonaws.com/phusion-passenger/releases/passenger-$PASSENGER_VERSION.tar.gz"
+  # if [ ! -f "passenger-$PASSENGER_VERSION.tar.gz" ]; then
+  #   curl --compressed -fLO "http://s3.amazonaws.com/phusion-passenger/releases/passenger-$PASSENGER_VERSION.tar.gz"
+  # else
+  if [ -f "passenger-$PASSENGER_VERSION.tar.gz" ]; then
+    rm -rf "passenger-$PASSENGER_VERSION"
   fi
+  wget -c "http://s3.amazonaws.com/phusion-passenger/releases/passenger-$PASSENGER_VERSION.tar.gz"
   tar zxvf "passenger-$PASSENGER_VERSION.tar.gz"
   mv "passenger-$PASSENGER_VERSION" "$PASSENGER_INSTALLATION_PATH"
   echo "export PATH=$PASSENGER_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/passenger.sh

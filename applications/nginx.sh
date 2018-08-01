@@ -108,11 +108,13 @@ install_nginx() {
   if [ -d "$NGINX_INSTALLATION_PATH" ]; then
     mv "$NGINX_INSTALLATION_PATH" "$NGINX_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
-  if [ ! -f "nginx-$NGINX_VERSION.tar.gz" ]; then
-    curl --compressed -fLO "http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz"
-  else
+  # if [ ! -f "nginx-$NGINX_VERSION.tar.gz" ]; then
+  #   curl --compressed -fLO "http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz"
+  # else
+  if [ -f "nginx-$NGINX_VERSION.tar.gz" ]; then
     rm -rf "nginx-$NGINX_VERSION"
   fi
+  wget -c "http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz"
   tar zxvf "nginx-$NGINX_VERSION.tar.gz"
   cd "nginx-$NGINX_VERSION"
   ./configure $CONFIGURE_OPTIONS
