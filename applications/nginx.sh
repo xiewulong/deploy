@@ -50,7 +50,7 @@ if [ $NGINX == 'Y' ]; then
   fi
   if [ $NGINX_WITH_PASSENGER == 'Y' ]; then
     PASSENGER=Y
-    source applications/passenger.sh
+    source "$CSD/applications/passenger.sh"
   fi
 fi
 

@@ -17,7 +17,7 @@ if [ -z $INSTALLATION_PATH ]; then
 fi
 
 RUBY=Y
-source applications/ruby.sh
+source "$CSD/applications/ruby.sh"
 
 if [ -z $PASSENGER ]; then
   typeset -u PASSENGER
