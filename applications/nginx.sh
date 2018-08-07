@@ -103,8 +103,6 @@ install_nginx() {
   fi
 
   set -x
-  yum -y install gcc gcc-c++ make \
-                 curl-devel gd-devel GeoIP-devel libxslt-devel openssl-devel pcre-devel
   if [ -d "$NGINX_INSTALLATION_PATH" ]; then
     mv "$NGINX_INSTALLATION_PATH" "$NGINX_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi

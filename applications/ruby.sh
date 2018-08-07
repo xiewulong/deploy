@@ -49,8 +49,6 @@ install_ruby() {
   fi
 
   set -x
-  yum -y install gcc gcc-c++ make \
-                 openssl-devel zlib-devel
   if [ -d "$RUBY_INSTALLATION_PATH" ]; then
     mv "$RUBY_INSTALLATION_PATH" "$RUBY_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
