@@ -65,7 +65,7 @@ install_python3() {
   make
   make install
   cd ..
-  # echo "export PATH=$PYTHON3_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/python3.sh
-  # source /etc/profile.d/python3.sh
+  echo "export PATH=$PYTHON3_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/python3.sh
+  source /etc/profile.d/python3.sh
   set +x
 }
