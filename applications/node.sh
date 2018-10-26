@@ -66,6 +66,10 @@ install_node() {
   mv "node-v$NODE_VERSION-linux-x64" "$NODE_INSTALLATION_PATH"
   echo "export PATH=$NODE_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/node.sh
   source /etc/profile.d/node.sh
-  # npm install -g --registry=https://registry.npm.taobao.org cnpm npm@latest yarn
+  # npm config set disturl https://npm.taobao.org/dist --global
+  # npm config set registry https://registry.npm.taobao.org --global
+  # npm install -g --registry=https://registry.npm.taobao.org npm@latest yarn
+  # yarn config set disturl https://npm.taobao.org/dist --global
+  # yarn config set registry https://registry.npm.taobao.org --global
   set +x
 }
