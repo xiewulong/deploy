@@ -61,7 +61,7 @@ install_python3() {
   wget -c "https://www.python.org/ftp/python/$PYTHON3_VERSION/Python-$PYTHON3_VERSION.tgz"
   tar zxvf "Python-$PYTHON3_VERSION.tgz"
   cd "Python-$PYTHON3_VERSION"
-  ./configure --prefix="$PYTHON3_INSTALLATION_PATH"
+  ./configure --prefix="$PYTHON3_INSTALLATION_PATH" --enable-optimizations
   make
   make install
   cd ..
