@@ -66,6 +66,7 @@ install_bind() {
   make install
   cd ..
   echo "export PATH=$BIND_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/bind.sh
+  echo "export PATH=$BIND_INSTALLATION_PATH/sbin:"'$PATH' >> /etc/profile.d/bind.sh
   source /etc/profile.d/bind.sh
   set +x
 }
