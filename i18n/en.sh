@@ -1,9 +1,12 @@
 #!/bin/bash
 LANG_BASIC_SETUP="Basic setup"
+LANG_BIND_OVERWRITE="Bind has been installed, overwrite"
+LANG_BIND_VERSION="Bind version"
 LANG_COMMON_INSTALLATION_PATH="Common installation path"
 LANG_DOCKER_COMPOSE_VERSION="Docker compose version"
 LANG_GIT_REPOSITORY_USERNAME="Git repository username"
 LANG_HOSTNAME="Hostname"
+LANG_INSTALL_BIND="Install bind"
 LANG_INSTALL_COMMON_LIBRARIES="Install common libraries"
 LANG_INSTALL_DOCKER="Install docker"
 LANG_INSTALL_DOCKER_COMPOSE="Install docker compose"

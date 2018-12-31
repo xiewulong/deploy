@@ -16,8 +16,6 @@ if [ -z $INSTALLATION_PATH ]; then
   fi
 fi
 
-NODE_INSTALLATION_PATH="$INSTALLATION_PATH/node"
-
 if [ -z $NODE ]; then
   typeset -u NODE
   read -p "$LANG_INSTALL_NODE[Y/N]: ($DEFAULT_NODE) " NODE
