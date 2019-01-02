@@ -33,12 +33,13 @@ APPLICATIONS=(
   python3
 )
 
-# Default options
-DEFAULT_BASIC_SETUP=N
-DEFAULT_COMMON_LIBRARY=N
-DEFAULT_INSTALLATION_PATH=/usr/local
-DEFAULT_YUM_UPDATE=N
-DEFAULT_YUM_UPGRADE=N
+# Defaults
+source "$CSD/defaults.sh"
+
+# Config
+if [ -f "$CSD/config.sh" ]; then
+  source "$CSD/config.sh"
+fi
 
 # Options
 if [ -z $BASIC_SETUP ]; then

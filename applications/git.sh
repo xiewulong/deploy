@@ -2,11 +2,6 @@
 
 set -e
 
-# Default options
-DEFAULT_GIT=N
-DEFAULT_GIT_REPOSITORY=N
-DEFAULT_GIT_REPOSITORY_USERNAME=git
-
 # Options
 if [ -z $GIT ]; then
   typeset -u GIT
