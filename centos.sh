@@ -111,6 +111,11 @@ done
 cd $CSD/tmp
 
 # Install
+if [ $DEFAULT_INSTALLATION_MODE == 'Y' ]; then
+  set -x
+  $LANG_DEFAULT_INSTALLATION_MODE
+  set +x
+fi
 if [ $BASIC_SETUP == 'Y' ]; then
   if [ -n "$HOSTNAME" ]; then
     set -x
