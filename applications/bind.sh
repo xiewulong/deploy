@@ -3,6 +3,8 @@
 set -e
 
 # Options
+BIND_INSTALLATION_PATH="$INSTALLATION_PATH/bind"
+
 if [ -z $BIND ]; then
   typeset -u BIND
   read -p "$LANG_INSTALL_BIND[Y/N]: ($DEFAULT_BIND) " BIND
@@ -11,15 +13,22 @@ if [ -z $BIND ]; then
   fi
 fi
 
-BIND_INSTALLATION_PATH="$INSTALLATION_PATH/bind"
-typeset -u BIND_OVERWRITE
-if [[ $BIND == 'Y' && -d "$BIND_INSTALLATION_PATH" && $BIND_OVERWRITE != 'Y' ]]; then
-  typeset -u BIND
-  read -p "$LANG_BIND_OVERWRITE[Y/N]: ($DEFAULT_BIND_OVERWRITE) " BIND
-  if [ -z $BIND ]; then
-    BIND=$DEFAULT_BIND_OVERWRITE
+if [[ $BIND == 'Y' && -d "$BIND_INSTALLATION_PATH" ]]; then
+  typeset -u BIND_OVERWRITE
+  if [ -z $BIND_OVERWRITE ]; then
+    typeset -u BIND
+    read -p "$LANG_BIND_OVERWRITE[Y/N]: ($DEFAULT_BIND_OVERWRITE) " BIND
+    if [ -z $BIND ]; then
+      BIND=$DEFAULT_BIND_OVERWRITE
+    fi
+  else
+    BIND=$BIND_OVERWRITE
   fi
 fi
+
+echo '---------------------------------'
+echo $BIND
+echo '---------------------------------'
 
 if [ $BIND == 'Y' ]; then
   if [ -z $BIND_VERSION ]; then
