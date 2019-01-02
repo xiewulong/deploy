@@ -44,26 +44,30 @@ fi
 # Options
 if [ -z $BASIC_SETUP ]; then
   typeset -u BASIC_SETUP
-  read -p "$LANG_BASIC_SETUP[Y/N]: ($DEFAULT_BASIC_SETUP) " BASIC_SETUP
+  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    read -p "$LANG_BASIC_SETUP[Y/N]: ($DEFAULT_BASIC_SETUP) " BASIC_SETUP
+  fi
   if [ -z $BASIC_SETUP ]; then
     BASIC_SETUP=$DEFAULT_BASIC_SETUP
   fi
 fi
 if [ $BASIC_SETUP == 'Y' ]; then
-  if [ -z $HOSTNAME ]; then
+  if [[ -z $HOSTNAME && $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_HOSTNAME: " HOSTNAME
   fi
-  if [ -z $USERNAME ]; then
+  if [[ -z $USERNAME && $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_USERNAME: " USERNAME
   fi
-  if [ -z $TIMEOUT ]; then
+  if [[ -z $TIMEOUT && $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_TIMEOUT[>=0]($LANG_SECONDS): " TIMEOUT
   fi
 fi
 
 if [ -z $YUM_UPDATE ]; then
   typeset -u YUM_UPDATE
-  read -p "$LANG_YUM_UPDATE[Y/N]: ($DEFAULT_YUM_UPDATE) " YUM_UPDATE
+  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    read -p "$LANG_YUM_UPDATE[Y/N]: ($DEFAULT_YUM_UPDATE) " YUM_UPDATE
+  fi
   if [ -z $YUM_UPDATE ]; then
     YUM_UPDATE=$DEFAULT_YUM_UPDATE
   fi
@@ -71,7 +75,9 @@ fi
 
 if [ -z $YUM_UPGRADE ]; then
   typeset -u YUM_UPGRADE
-  read -p "$LANG_YUM_UPGRADE[Y/N]: ($DEFAULT_YUM_UPGRADE) " YUM_UPGRADE
+  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    read -p "$LANG_YUM_UPGRADE[Y/N]: ($DEFAULT_YUM_UPGRADE) " YUM_UPGRADE
+  fi
   if [ -z $YUM_UPGRADE ]; then
     YUM_UPGRADE=$DEFAULT_YUM_UPGRADE
   fi
@@ -79,14 +85,18 @@ fi
 
 if [ -z $COMMON_LIBRARY ]; then
   typeset -u COMMON_LIBRARY
-  read -p "$LANG_INSTALL_COMMON_LIBRARIES[Y/N]: ($DEFAULT_COMMON_LIBRARY) " COMMON_LIBRARY
+  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    read -p "$LANG_INSTALL_COMMON_LIBRARIES[Y/N]: ($DEFAULT_COMMON_LIBRARY) " COMMON_LIBRARY
+  fi
   if [ -z $COMMON_LIBRARY ]; then
     COMMON_LIBRARY=$DEFAULT_COMMON_LIBRARY
   fi
 fi
 
 if [ -z $INSTALLATION_PATH ]; then
-  read -p "$LANG_COMMON_INSTALLATION_PATH: ($DEFAULT_INSTALLATION_PATH) " INSTALLATION_PATH
+  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    read -p "$LANG_COMMON_INSTALLATION_PATH: ($DEFAULT_INSTALLATION_PATH) " INSTALLATION_PATH
+  fi
   if [ -z $INSTALLATION_PATH ]; then
     INSTALLATION_PATH=$DEFAULT_INSTALLATION_PATH
   fi

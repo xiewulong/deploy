@@ -3,26 +3,37 @@
 set -e
 
 # Options
+RUBY_INSTALLATION_PATH="$INSTALLATION_PATH/ruby"
+
 if [ -z $RUBY ]; then
   typeset -u RUBY
-  read -p "$LANG_INSTALL_RUBY[Y/N]: ($DEFAULT_RUBY) " RUBY
+  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    read -p "$LANG_INSTALL_RUBY[Y/N]: ($DEFAULT_RUBY) " RUBY
+  fi
   if [ -z $RUBY ]; then
     RUBY=$DEFAULT_RUBY
   fi
 fi
 
-RUBY_INSTALLATION_PATH="$INSTALLATION_PATH/ruby"
 if [[ $RUBY == 'Y' && -d "$RUBY_INSTALLATION_PATH" ]]; then
   typeset -u RUBY
-  read -p "$LANG_RUBY_OVERWRITE[Y/N]: ($DEFAULT_RUBY_OVERWRITE) " RUBY
-  if [ -z $RUBY ]; then
-    RUBY=$DEFAULT_RUBY_OVERWRITE
+  if [ -z $RUBY_OVERWRITE ]; then
+    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+      read -p "$LANG_RUBY_OVERWRITE[Y/N]: ($DEFAULT_RUBY_OVERWRITE) " RUBY
+    fi
+    if [ -z $RUBY ]; then
+      RUBY=$DEFAULT_RUBY_OVERWRITE
+    fi
+  else
+    RUBY=$RUBY_OVERWRITE
   fi
 fi
 
 if [ $RUBY == 'Y' ]; then
   if [ -z $RUBY_VERSION ]; then
-    read -p "$LANG_RUBY_VERSION: ($DEFAULT_RUBY_VERSION) " RUBY_VERSION
+    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+      read -p "$LANG_RUBY_VERSION: ($DEFAULT_RUBY_VERSION) " RUBY_VERSION
+    fi
     if [ -z $RUBY_VERSION ]; then
       RUBY_VERSION=$DEFAULT_RUBY_VERSION
     fi

@@ -5,7 +5,9 @@ set -e
 # Options
 if [ -z $GIT ]; then
   typeset -u GIT
-  read -p "$LANG_INSTALL_GIT[Y/N]: ($DEFAULT_GIT) " GIT
+  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    read -p "$LANG_INSTALL_GIT[Y/N]: ($DEFAULT_GIT) " GIT
+  fi
   if [ -z $GIT ]; then
     GIT=$DEFAULT_GIT
   fi
@@ -14,14 +16,18 @@ fi
 if [ $GIT == 'Y' ]; then
   if [ -z $GIT_REPOSITORY ]; then
     typeset -u GIT_REPOSITORY
-    read -p "$LANG_INSTALL_GIT_REPOSITORY[Y/N]: ($DEFAULT_GIT_REPOSITORY) " GIT_REPOSITORY
+    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+      read -p "$LANG_INSTALL_GIT_REPOSITORY[Y/N]: ($DEFAULT_GIT_REPOSITORY) " GIT_REPOSITORY
+    fi
     if [ -z $GIT_REPOSITORY ]; then
       GIT_REPOSITORY=$DEFAULT_GIT_REPOSITORY
     fi
   fi
   if [ $GIT_REPOSITORY == 'Y' ]; then
     if [ -z $GIT_REPOSITORY_USERNAME ]; then
-      read -p "$LANG_GIT_REPOSITORY_USERNAME: ($DEFAULT_GIT_REPOSITORY_USERNAME) " GIT_REPOSITORY_USERNAME
+      if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+        read -p "$LANG_GIT_REPOSITORY_USERNAME: ($DEFAULT_GIT_REPOSITORY_USERNAME) " GIT_REPOSITORY_USERNAME
+      fi
       if [ -z $GIT_REPOSITORY_USERNAME ]; then
         GIT_REPOSITORY_USERNAME=$DEFAULT_GIT_REPOSITORY_USERNAME
       fi

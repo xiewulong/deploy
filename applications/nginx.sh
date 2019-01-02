@@ -3,33 +3,46 @@
 set -e
 
 # Options
+NGINX_INSTALLATION_PATH="$INSTALLATION_PATH/nginx"
+
 if [ -z $NGINX ]; then
   typeset -u NGINX
-  read -p "$LANG_INSTALL_NGINX[Y/N]: ($DEFAULT_NGINX) " NGINX
+  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    read -p "$LANG_INSTALL_NGINX[Y/N]: ($DEFAULT_NGINX) " NGINX
+  fi
   if [ -z $NGINX ]; then
     NGINX=$DEFAULT_NGINX
   fi
 fi
 
-NGINX_INSTALLATION_PATH="$INSTALLATION_PATH/nginx"
 if [[ $NGINX == 'Y' && -d "$NGINX_INSTALLATION_PATH" ]]; then
   typeset -u NGINX
-  read -p "$LANG_NGINX_OVERWRITE[Y/N]: ($DEFAULT_NGINX_OVERWRITE) " NGINX
-  if [ -z $NGINX ]; then
-    NGINX=$DEFAULT_NGINX_OVERWRITE
+  if [ -z $NGINX_OVERWRITE ]; then
+    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+      read -p "$LANG_NGINX_OVERWRITE[Y/N]: ($DEFAULT_NGINX_OVERWRITE) " NGINX
+    fi
+    if [ -z $NGINX ]; then
+      NGINX=$DEFAULT_BIND_OVERWRITE
+    fi
+  else
+    NGINX=$NGINX_OVERWRITE
   fi
 fi
 
 if [ $NGINX == 'Y' ]; then
   if [ -z $NGINX_VERSION ]; then
-    read -p "$LANG_NGINX_VERSION: ($DEFAULT_NGINX_VERSION) " NGINX_VERSION
+    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+      read -p "$LANG_NGINX_VERSION: ($DEFAULT_NGINX_VERSION) " NGINX_VERSION
+    fi
     if [ -z $NGINX_VERSION ]; then
       NGINX_VERSION=$DEFAULT_NGINX_VERSION
     fi
   fi
   if [ -z $NGINX_WITH_PASSENGER ]; then
     typeset -u NGINX_WITH_PASSENGER
-    read -p "$LANG_NGINX_WITH_PASSENGER[Y/N]: ($DEFAULT_NGINX_WITH_PASSENGER) " NGINX_WITH_PASSENGER
+    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+      read -p "$LANG_NGINX_WITH_PASSENGER[Y/N]: ($DEFAULT_NGINX_WITH_PASSENGER) " NGINX_WITH_PASSENGER
+    fi
     if [ -z $NGINX_WITH_PASSENGER ]; then
       NGINX_WITH_PASSENGER=$DEFAULT_NGINX_WITH_PASSENGER
     fi

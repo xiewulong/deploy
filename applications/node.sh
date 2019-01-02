@@ -3,26 +3,37 @@
 set -e
 
 # Options
+NODE_INSTALLATION_PATH="$INSTALLATION_PATH/node"
+
 if [ -z $NODE ]; then
   typeset -u NODE
-  read -p "$LANG_INSTALL_NODE[Y/N]: ($DEFAULT_NODE) " NODE
+  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    read -p "$LANG_INSTALL_NODE[Y/N]: ($DEFAULT_NODE) " NODE
+  fi
   if [ -z $NODE ]; then
     NODE=$DEFAULT_NODE
   fi
 fi
 
-NODE_INSTALLATION_PATH="$INSTALLATION_PATH/node"
 if [[ $NODE == 'Y' && -d "$NODE_INSTALLATION_PATH" ]]; then
   typeset -u NODE
-  read -p "$LANG_NODE_OVERWRITE[Y/N]: ($DEFAULT_NODE_OVERWRITE) " NODE
-  if [ -z $NODE ]; then
-    NODE=$DEFAULT_NODE_OVERWRITE
+  if [ -z $NODE_OVERWRITE ]; then
+    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+      read -p "$LANG_NODE_OVERWRITE[Y/N]: ($DEFAULT_NODE_OVERWRITE) " NODE
+    fi
+    if [ -z $NODE ]; then
+      NODE=$DEFAULT_NODE_OVERWRITE
+    fi
+  else
+    NODE=$NODE_OVERWRITE
   fi
 fi
 
 if [ $NODE == 'Y' ]; then
   if [ -z $NODE_VERSION ]; then
-    read -p "$LANG_NODE_VERSION: ($DEFAULT_NODE_VERSION) " NODE_VERSION
+    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+      read -p "$LANG_NODE_VERSION: ($DEFAULT_NODE_VERSION) " NODE_VERSION
+    fi
     if [ -z $NODE_VERSION ]; then
       NODE_VERSION=$DEFAULT_NODE_VERSION
     fi
