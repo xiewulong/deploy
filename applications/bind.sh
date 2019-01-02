@@ -12,7 +12,8 @@ if [ -z $BIND ]; then
 fi
 
 BIND_INSTALLATION_PATH="$INSTALLATION_PATH/bind"
-if [[ $BIND == 'Y' && -d "$BIND_INSTALLATION_PATH" ]]; then
+typeset -u BIND_OVERWRITE
+if [[ $BIND == 'Y' && -d "$BIND_INSTALLATION_PATH" && $BIND_OVERWRITE != 'Y' ]]; then
   typeset -u BIND
   read -p "$LANG_BIND_OVERWRITE[Y/N]: ($DEFAULT_BIND_OVERWRITE) " BIND
   if [ -z $BIND ]; then

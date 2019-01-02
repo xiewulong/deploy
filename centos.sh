@@ -50,9 +50,15 @@ if [ -z $BASIC_SETUP ]; then
   fi
 fi
 if [ $BASIC_SETUP == 'Y' ]; then
-  read -p "$LANG_HOSTNAME: " HOSTNAME
-  read -p "$LANG_USERNAME: " USERNAME
-  read -p "$LANG_TIMEOUT[>=0]($LANG_SECONDS): " TIMEOUT
+  if [ -z $HOSTNAME ]; then
+    read -p "$LANG_HOSTNAME: " HOSTNAME
+  fi
+  if [ -z $USERNAME ]; then
+    read -p "$LANG_USERNAME: " USERNAME
+  fi
+  if [ -z $TIMEOUT ]; then
+    read -p "$LANG_TIMEOUT[>=0]($LANG_SECONDS): " TIMEOUT
+  fi
 fi
 
 if [ -z $YUM_UPDATE ]; then
