@@ -14,9 +14,8 @@ if [ -z $BIND ]; then
 fi
 
 if [[ $BIND == 'Y' && -d "$BIND_INSTALLATION_PATH" ]]; then
-  typeset -u BIND_OVERWRITE
+  typeset -u BIND
   if [ -z $BIND_OVERWRITE ]; then
-    typeset -u BIND
     read -p "$LANG_BIND_OVERWRITE[Y/N]: ($DEFAULT_BIND_OVERWRITE) " BIND
     if [ -z $BIND ]; then
       BIND=$DEFAULT_BIND_OVERWRITE
