@@ -8,14 +8,14 @@ CSD=$(cd `dirname $0`; pwd)
 
 # I18n
 CURRENT_LANG=${LANG%.*}
-if [ -f "$CSD/i18n/$CURRENT_LANG.sh" ]; then
+if [[ -f "$CSD/i18n/$CURRENT_LANG.sh" ]]; then
   source "$CSD/i18n/$CURRENT_LANG.sh"
 else
   source "$CSD/i18n/en.sh"
 fi
 
 # Check permission
-if [ `id -u` != '0' ]; then
+if [[ `id -u` != '0' ]]; then
   echo $LANG_NON_ROOT_ERROR
   exit 1
 fi
@@ -44,7 +44,7 @@ fi
 # Options
 if [ -z $BASIC_SETUP ]; then
   typeset -u BASIC_SETUP
-  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_BASIC_SETUP[Y/N]: ($DEFAULT_BASIC_SETUP) " BASIC_SETUP
   fi
   if [ -z $BASIC_SETUP ]; then
@@ -65,7 +65,7 @@ fi
 
 if [ -z $YUM_UPDATE ]; then
   typeset -u YUM_UPDATE
-  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_YUM_UPDATE[Y/N]: ($DEFAULT_YUM_UPDATE) " YUM_UPDATE
   fi
   if [ -z $YUM_UPDATE ]; then
@@ -75,7 +75,7 @@ fi
 
 if [ -z $YUM_UPGRADE ]; then
   typeset -u YUM_UPGRADE
-  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_YUM_UPGRADE[Y/N]: ($DEFAULT_YUM_UPGRADE) " YUM_UPGRADE
   fi
   if [ -z $YUM_UPGRADE ]; then
@@ -85,7 +85,7 @@ fi
 
 if [ -z $COMMON_LIBRARY ]; then
   typeset -u COMMON_LIBRARY
-  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_INSTALL_COMMON_LIBRARIES[Y/N]: ($DEFAULT_COMMON_LIBRARY) " COMMON_LIBRARY
   fi
   if [ -z $COMMON_LIBRARY ]; then
@@ -94,7 +94,7 @@ if [ -z $COMMON_LIBRARY ]; then
 fi
 
 if [ -z $INSTALLATION_PATH ]; then
-  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_COMMON_INSTALLATION_PATH: ($DEFAULT_INSTALLATION_PATH) " INSTALLATION_PATH
   fi
   if [ -z $INSTALLATION_PATH ]; then
