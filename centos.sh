@@ -115,17 +115,17 @@ if [[ $DEFAULT_INSTALLATION_MODE == 'Y' ]]; then
   echo "+ $LANG_DEFAULT_INSTALLATION_MODE"
 fi
 if [[ $BASIC_SETUP == 'Y' ]]; then
-  if [[ -n "$HOSTNAME" ]]; then
+  if [[ -n $HOSTNAME ]]; then
     set -x
     hostnamectl set-hostname $HOSTNAME
     set +x
   fi
-  if [[ -n "$TIMEOUT" ]]; then
+  if [[ -n $TIMEOUT ]]; then
     set -x
     echo "TMOUT=$TIMEOUT" > /etc/profile.d/tmout.sh
     set +x
   fi
-  if [[ -n "$USERNAME" ]]; then
+  if [[ -n $USERNAME ]]; then
     set -x
     useradd $USERNAME
     # chcon -Rt httpd_sys_rw_content_t /home/$USERNAME

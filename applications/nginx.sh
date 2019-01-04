@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 # Options
@@ -15,7 +14,7 @@ if [[ -z $NGINX ]]; then
   fi
 fi
 
-if [[ $NGINX == 'Y' && -d "$NGINX_INSTALLATION_PATH" ]]; then
+if [[ $NGINX == 'Y' && -d $NGINX_INSTALLATION_PATH ]]; then
   typeset -u NGINX
   if [[ -z $NGINX_OVERWRITE ]]; then
     if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
@@ -102,8 +101,8 @@ install_nginx() {
   fi
 
   set -x
-  if [[ -d "$NGINX_INSTALLATION_PATH" ]]; then
-    mv "$NGINX_INSTALLATION_PATH" "$NGINX_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
+  if [[ -d $NGINX_INSTALLATION_PATH ]]; then
+    mv $NGINX_INSTALLATION_PATH "$NGINX_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
   # if [[ ! -f "nginx-$NGINX_VERSION.tar.gz" ]]; then
   #   curl --compressed -fLO "http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz"

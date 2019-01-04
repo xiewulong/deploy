@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 # Options
@@ -18,7 +17,7 @@ if [[ -z $PASSENGER ]]; then
   fi
 fi
 
-if [[ $PASSENGER == 'Y' && -d "$PASSENGER_INSTALLATION_PATH" ]]; then
+if [[ $PASSENGER == 'Y' && -d $PASSENGER_INSTALLATION_PATH ]]; then
   typeset -u PASSENGER
   if [[ -z $PASSENGER_OVERWRITE ]]; then
     if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
@@ -52,8 +51,8 @@ install_passenger() {
   install_ruby
 
   set -x
-  if [[ -d "$PASSENGER_INSTALLATION_PATH" ]]; then
-    mv "$PASSENGER_INSTALLATION_PATH" "$PASSENGER_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
+  if [[ -d $PASSENGER_INSTALLATION_PATH ]]; then
+    mv $PASSENGER_INSTALLATION_PATH "$PASSENGER_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
   # if [[ ! -f "passenger-$PASSENGER_VERSION.tar.gz" ]]; then
   #   curl --compressed -fLO "http://s3.amazonaws.com/phusion-passenger/releases/passenger-$PASSENGER_VERSION.tar.gz"
@@ -63,7 +62,7 @@ install_passenger() {
   fi
   wget -c "http://s3.amazonaws.com/phusion-passenger/releases/passenger-$PASSENGER_VERSION.tar.gz"
   tar zxvf "passenger-$PASSENGER_VERSION.tar.gz"
-  mv "passenger-$PASSENGER_VERSION" "$PASSENGER_INSTALLATION_PATH"
+  mv "passenger-$PASSENGER_VERSION" $PASSENGER_INSTALLATION_PATH
   echo "export PATH=$PASSENGER_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/passenger.sh
   source /etc/profile.d/passenger.sh
   set +x

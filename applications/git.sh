@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 # Options
@@ -50,7 +49,7 @@ install_git() {
   fi
 
   set -x
-  useradd -s /bin/git-shell "$GIT_REPOSITORY_USERNAME"
+  useradd -s /bin/git-shell $GIT_REPOSITORY_USERNAME
   mkdir -m 700 "/home/$GIT_REPOSITORY_USERNAME/.ssh"
   touch "/home/$GIT_REPOSITORY_USERNAME/.ssh/authorized_keys"
   chmod 600 "/home/$GIT_REPOSITORY_USERNAME/.ssh/authorized_keys"

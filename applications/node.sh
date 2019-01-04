@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 # Options
@@ -15,7 +14,7 @@ if [[ -z $NODE ]]; then
   fi
 fi
 
-if [[ $NODE == 'Y' && -d "$NODE_INSTALLATION_PATH" ]]; then
+if [[ $NODE == 'Y' && -d $NODE_INSTALLATION_PATH ]]; then
   typeset -u NODE
   if [[ -z $NODE_OVERWRITE ]]; then
     if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
@@ -47,8 +46,8 @@ install_node() {
   fi
 
   set -x
-  if [[ -d "$NODE_INSTALLATION_PATH" ]]; then
-    mv "$NODE_INSTALLATION_PATH" "$NODE_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
+  if [[ -d $NODE_INSTALLATION_PATH ]]; then
+    mv $NODE_INSTALLATION_PATH "$NODE_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
   # if [[ ! -f "node-v$NODE_VERSION-linux-x64.tar.xz" ]]; then
   #   curl --compressed -fLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
@@ -59,7 +58,7 @@ install_node() {
   wget -c "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
   tar xvf "node-v$NODE_VERSION-linux-x64.tar.xz"
   chown root:root -R "node-v$NODE_VERSION-linux-x64"
-  mv "node-v$NODE_VERSION-linux-x64" "$NODE_INSTALLATION_PATH"
+  mv "node-v$NODE_VERSION-linux-x64" $NODE_INSTALLATION_PATH
   echo "export PATH=$NODE_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/node.sh
   source /etc/profile.d/node.sh
   # npm config set disturl https://npm.taobao.org/dist --global

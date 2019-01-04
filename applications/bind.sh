@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 # Options
@@ -47,8 +46,8 @@ install_bind() {
   fi
 
   set -x
-  if [[ -d "$BIND_INSTALLATION_PATH" ]]; then
-    mv "$BIND_INSTALLATION_PATH" "$BIND_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
+  if [[ -d $BIND_INSTALLATION_PATH ]]; then
+    mv $BIND_INSTALLATION_PATH "$BIND_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
   if [[ -f "bind-$BIND_VERSION.tar.gz" ]]; then
     rm -rf "bind-$BIND_VERSION"
@@ -59,7 +58,7 @@ install_bind() {
   tar xvf "bind-$BIND_VERSION.tar.gz"
   chown root:root -R "bind-$BIND_VERSION"
   cd "bind-$BIND_VERSION"
-  ./configure --prefix="$BIND_INSTALLATION_PATH"
+  ./configure --prefix=$BIND_INSTALLATION_PATH
   make
   make install
   cd ..

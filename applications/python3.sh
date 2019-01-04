@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 # Options
@@ -15,7 +14,7 @@ if [[ -z $PYTHON3 ]]; then
   fi
 fi
 
-if [[ $PYTHON3 == 'Y' && -d "$PYTHON3_INSTALLATION_PATH" ]]; then
+if [[ $PYTHON3 == 'Y' && -d $PYTHON3_INSTALLATION_PATH ]]; then
   typeset -u PYTHON3
   if [[ -z $PYTHON3_OVERWRITE ]]; then
     if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
@@ -47,8 +46,8 @@ install_python3() {
   fi
 
   set -x
-  if [[ -d "$PYTHON3_INSTALLATION_PATH" ]]; then
-    mv "$PYTHON3_INSTALLATION_PATH" "$PYTHON3_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
+  if [[ -d $PYTHON3_INSTALLATION_PATH ]]; then
+    mv $PYTHON3_INSTALLATION_PATH "$PYTHON3_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
   # if [[ ! -f "Python-$PYTHON3_VERSION.tgz" ]]; then
   #   curl --compressed -fLO "https://www.python.org/ftp/python/$PYTHON3_VERSION/Python-$PYTHON3_VERSION.tgz"
@@ -59,7 +58,7 @@ install_python3() {
   wget -c "https://www.python.org/ftp/python/$PYTHON3_VERSION/Python-$PYTHON3_VERSION.tgz"
   tar zxvf "Python-$PYTHON3_VERSION.tgz"
   cd "Python-$PYTHON3_VERSION"
-  ./configure --prefix="$PYTHON3_INSTALLATION_PATH" --enable-optimizations
+  ./configure --prefix=$PYTHON3_INSTALLATION_PATH --enable-optimizations
   make
   make install
   cd ..
