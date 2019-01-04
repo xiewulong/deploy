@@ -52,8 +52,8 @@ if [[ -z $BASIC_SETUP ]]; then
   fi
 fi
 if [[ $BASIC_SETUP == 'Y' ]]; then
-  if [[ -z $HOSTNAME && $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
-    read -p "$LANG_HOSTNAME: " HOSTNAME
+  if [[ -z $HOST_NAME && $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
+    read -p "$LANG_HOST_NAME: " HOST_NAME
   fi
   if [[ -z $USERNAME && $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_USERNAME: " USERNAME
@@ -115,9 +115,9 @@ if [[ $DEFAULT_INSTALLATION_MODE == 'Y' ]]; then
   echo "+ $LANG_DEFAULT_INSTALLATION_MODE"
 fi
 if [[ $BASIC_SETUP == 'Y' ]]; then
-  if [[ -n $HOSTNAME ]]; then
+  if [[ -n $HOST_NAME ]]; then
     set -x
-    hostnamectl set-hostname $HOSTNAME
+    hostnamectl set-hostname $HOST_NAME
     set +x
   fi
   if [[ -n $TIMEOUT ]]; then
