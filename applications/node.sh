@@ -5,23 +5,23 @@ set -e
 # Options
 NODE_INSTALLATION_PATH="$INSTALLATION_PATH/node"
 
-if [ -z $NODE ]; then
+if [[ -z $NODE ]]; then
   typeset -u NODE
-  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_INSTALL_NODE[Y/N]: ($DEFAULT_NODE) " NODE
   fi
-  if [ -z $NODE ]; then
+  if [[ -z $NODE ]]; then
     NODE=$DEFAULT_NODE
   fi
 fi
 
 if [[ $NODE == 'Y' && -d "$NODE_INSTALLATION_PATH" ]]; then
   typeset -u NODE
-  if [ -z $NODE_OVERWRITE ]; then
-    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ -z $NODE_OVERWRITE ]]; then
+    if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
       read -p "$LANG_NODE_OVERWRITE[Y/N]: ($DEFAULT_NODE_OVERWRITE) " NODE
     fi
-    if [ -z $NODE ]; then
+    if [[ -z $NODE ]]; then
       NODE=$DEFAULT_NODE_OVERWRITE
     fi
   else
@@ -29,12 +29,12 @@ if [[ $NODE == 'Y' && -d "$NODE_INSTALLATION_PATH" ]]; then
   fi
 fi
 
-if [ $NODE == 'Y' ]; then
-  if [ -z $NODE_VERSION ]; then
-    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+if [[ $NODE == 'Y' ]]; then
+  if [[ -z $NODE_VERSION ]]; then
+    if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
       read -p "$LANG_NODE_VERSION: ($DEFAULT_NODE_VERSION) " NODE_VERSION
     fi
-    if [ -z $NODE_VERSION ]; then
+    if [[ -z $NODE_VERSION ]]; then
       NODE_VERSION=$DEFAULT_NODE_VERSION
     fi
   fi
@@ -42,18 +42,18 @@ fi
 
 # Install
 install_node() {
-  if [ $NODE != 'Y' ]; then
+  if [[ $NODE != 'Y' ]]; then
     return
   fi
 
   set -x
-  if [ -d "$NODE_INSTALLATION_PATH" ]; then
+  if [[ -d "$NODE_INSTALLATION_PATH" ]]; then
     mv "$NODE_INSTALLATION_PATH" "$NODE_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
-  # if [ ! -f "node-v$NODE_VERSION-linux-x64.tar.xz" ]; then
+  # if [[ ! -f "node-v$NODE_VERSION-linux-x64.tar.xz" ]]; then
   #   curl --compressed -fLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
   # else
-  if [ -f "node-v$NODE_VERSION-linux-x64.tar.xz" ]; then
+  if [[ -f "node-v$NODE_VERSION-linux-x64.tar.xz" ]]; then
     rm -rf "node-v$NODE_VERSION-linux-x64"
   fi
   wget -c "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"

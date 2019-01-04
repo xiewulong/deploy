@@ -37,21 +37,21 @@ APPLICATIONS=(
 source "$CSD/defaults.sh"
 
 # Config
-if [ -f "$CSD/config.sh" ]; then
+if [[ -f "$CSD/config.sh" ]]; then
   source "$CSD/config.sh"
 fi
 
 # Options
-if [ -z $BASIC_SETUP ]; then
+if [[ -z $BASIC_SETUP ]]; then
   typeset -u BASIC_SETUP
   if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_BASIC_SETUP[Y/N]: ($DEFAULT_BASIC_SETUP) " BASIC_SETUP
   fi
-  if [ -z $BASIC_SETUP ]; then
+  if [[ -z $BASIC_SETUP ]]; then
     BASIC_SETUP=$DEFAULT_BASIC_SETUP
   fi
 fi
-if [ $BASIC_SETUP == 'Y' ]; then
+if [[ $BASIC_SETUP == 'Y' ]]; then
   if [[ -z $HOSTNAME && $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_HOSTNAME: " HOSTNAME
   fi
@@ -63,41 +63,41 @@ if [ $BASIC_SETUP == 'Y' ]; then
   fi
 fi
 
-if [ -z $YUM_UPDATE ]; then
+if [[ -z $YUM_UPDATE ]]; then
   typeset -u YUM_UPDATE
   if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_YUM_UPDATE[Y/N]: ($DEFAULT_YUM_UPDATE) " YUM_UPDATE
   fi
-  if [ -z $YUM_UPDATE ]; then
+  if [[ -z $YUM_UPDATE ]]; then
     YUM_UPDATE=$DEFAULT_YUM_UPDATE
   fi
 fi
 
-if [ -z $YUM_UPGRADE ]; then
+if [[ -z $YUM_UPGRADE ]]; then
   typeset -u YUM_UPGRADE
   if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_YUM_UPGRADE[Y/N]: ($DEFAULT_YUM_UPGRADE) " YUM_UPGRADE
   fi
-  if [ -z $YUM_UPGRADE ]; then
+  if [[ -z $YUM_UPGRADE ]]; then
     YUM_UPGRADE=$DEFAULT_YUM_UPGRADE
   fi
 fi
 
-if [ -z $COMMON_LIBRARY ]; then
+if [[ -z $COMMON_LIBRARY ]]; then
   typeset -u COMMON_LIBRARY
   if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_INSTALL_COMMON_LIBRARIES[Y/N]: ($DEFAULT_COMMON_LIBRARY) " COMMON_LIBRARY
   fi
-  if [ -z $COMMON_LIBRARY ]; then
+  if [[ -z $COMMON_LIBRARY ]]; then
     COMMON_LIBRARY=$DEFAULT_COMMON_LIBRARY
   fi
 fi
 
-if [ -z $INSTALLATION_PATH ]; then
+if [[ -z $INSTALLATION_PATH ]]; then
   if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_COMMON_INSTALLATION_PATH: ($DEFAULT_INSTALLATION_PATH) " INSTALLATION_PATH
   fi
-  if [ -z $INSTALLATION_PATH ]; then
+  if [[ -z $INSTALLATION_PATH ]]; then
     INSTALLATION_PATH=$DEFAULT_INSTALLATION_PATH
   fi
 fi
@@ -111,21 +111,21 @@ done
 cd $CSD/tmp
 
 # Install
-if [ $DEFAULT_INSTALLATION_MODE == 'Y' ]; then
+if [[ $DEFAULT_INSTALLATION_MODE == 'Y' ]]; then
   echo "+ $LANG_DEFAULT_INSTALLATION_MODE"
 fi
-if [ $BASIC_SETUP == 'Y' ]; then
-  if [ -n "$HOSTNAME" ]; then
+if [[ $BASIC_SETUP == 'Y' ]]; then
+  if [[ -n "$HOSTNAME" ]]; then
     set -x
     hostnamectl set-hostname $HOSTNAME
     set +x
   fi
-  if [ -n "$TIMEOUT" ]; then
+  if [[ -n "$TIMEOUT" ]]; then
     set -x
     echo "TMOUT=$TIMEOUT" > /etc/profile.d/tmout.sh
     set +x
   fi
-  if [ -n "$USERNAME" ]; then
+  if [[ -n "$USERNAME" ]]; then
     set -x
     useradd $USERNAME
     # chcon -Rt httpd_sys_rw_content_t /home/$USERNAME
@@ -133,19 +133,19 @@ if [ $BASIC_SETUP == 'Y' ]; then
   fi
 fi
 
-if [ $YUM_UPDATE == 'Y' ]; then
+if [[ $YUM_UPDATE == 'Y' ]]; then
   set -x
   yum -y update
   set +x
 fi
 
-if [ $YUM_UPGRADE == 'Y' ]; then
+if [[ $YUM_UPGRADE == 'Y' ]]; then
   set -x
   yum -y upgrade
   set +x
 fi
 
-if [ $COMMON_LIBRARY == 'Y' ]; then
+if [[ $COMMON_LIBRARY == 'Y' ]]; then
   set -x
   yum -y install bash-completion bzip2 ca-certificates gcc gcc-c++ lrzsz make net-tools ntp redhat-lsb vim wget \
                  bison-devel curl-devel gdbm-devel gd-devel GeoIP-devel glib2-devel glibc-devel ImageMagick-devel libcurl-devel libffi-devel libxml2-devel libxslt-devel ncurses-devel openssl-devel pcre-devel readline-devel zlib-devel

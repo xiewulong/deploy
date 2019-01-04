@@ -3,32 +3,32 @@
 set -e
 
 # Options
-if [ -z $DOCKER ]; then
+if [[ -z $DOCKER ]]; then
   typeset -u DOCKER
-  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_INSTALL_DOCKER[Y/N]: ($DEFAULT_DOCKER) " DOCKER
   fi
-  if [ -z $DOCKER ]; then
+  if [[ -z $DOCKER ]]; then
     DOCKER=$DEFAULT_DOCKER
   fi
 fi
 
-if [ $DOCKER == 'Y' ]; then
-  if [ -z $DOCKER_COMPOSE ]; then
+if [[ $DOCKER == 'Y' ]]; then
+  if [[ -z $DOCKER_COMPOSE ]]; then
     typeset -u DOCKER_COMPOSE
-    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+    if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
       read -p "$LANG_INSTALL_DOCKER_COMPOSE[Y/N]: ($DEFAULT_DOCKER_COMPOSE) " DOCKER_COMPOSE
     fi
-    if [ -z $DOCKER_COMPOSE ]; then
+    if [[ -z $DOCKER_COMPOSE ]]; then
       DOCKER_COMPOSE=$DEFAULT_DOCKER_COMPOSE
     fi
   fi
-  if [ $DOCKER_COMPOSE == 'Y' ]; then
-    if [ -z $DOCKER_COMPOSE_VERSION ]; then
-      if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DOCKER_COMPOSE == 'Y' ]]; then
+    if [[ -z $DOCKER_COMPOSE_VERSION ]]; then
+      if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
         read -p "$LANG_DOCKER_COMPOSE_VERSION: ($DEFAULT_DOCKER_COMPOSE_VERSION) " DOCKER_COMPOSE_VERSION
       fi
-      if [ -z $DOCKER_COMPOSE_VERSION ]; then
+      if [[ -z $DOCKER_COMPOSE_VERSION ]]; then
         DOCKER_COMPOSE_VERSION=$DEFAULT_DOCKER_COMPOSE_VERSION
       fi
     fi
@@ -37,7 +37,7 @@ fi
 
 # Install
 install_docker() {
-  if [ $DOCKER != 'Y' ]; then
+  if [[ $DOCKER != 'Y' ]]; then
     return
   fi
 
@@ -50,7 +50,7 @@ install_docker() {
   systemctl start docker
   set +x
 
-  if [ $DOCKER_COMPOSE != 'Y' ]; then
+  if [[ $DOCKER_COMPOSE != 'Y' ]]; then
     return
   fi
 

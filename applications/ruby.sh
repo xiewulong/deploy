@@ -5,23 +5,23 @@ set -e
 # Options
 RUBY_INSTALLATION_PATH="$INSTALLATION_PATH/ruby"
 
-if [ -z $RUBY ]; then
+if [[ -z $RUBY ]]; then
   typeset -u RUBY
-  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_INSTALL_RUBY[Y/N]: ($DEFAULT_RUBY) " RUBY
   fi
-  if [ -z $RUBY ]; then
+  if [[ -z $RUBY ]]; then
     RUBY=$DEFAULT_RUBY
   fi
 fi
 
 if [[ $RUBY == 'Y' && -d "$RUBY_INSTALLATION_PATH" ]]; then
   typeset -u RUBY
-  if [ -z $RUBY_OVERWRITE ]; then
-    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ -z $RUBY_OVERWRITE ]]; then
+    if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
       read -p "$LANG_RUBY_OVERWRITE[Y/N]: ($DEFAULT_RUBY_OVERWRITE) " RUBY
     fi
-    if [ -z $RUBY ]; then
+    if [[ -z $RUBY ]]; then
       RUBY=$DEFAULT_RUBY_OVERWRITE
     fi
   else
@@ -29,12 +29,12 @@ if [[ $RUBY == 'Y' && -d "$RUBY_INSTALLATION_PATH" ]]; then
   fi
 fi
 
-if [ $RUBY == 'Y' ]; then
-  if [ -z $RUBY_VERSION ]; then
-    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+if [[ $RUBY == 'Y' ]]; then
+  if [[ -z $RUBY_VERSION ]]; then
+    if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
       read -p "$LANG_RUBY_VERSION: ($DEFAULT_RUBY_VERSION) " RUBY_VERSION
     fi
-    if [ -z $RUBY_VERSION ]; then
+    if [[ -z $RUBY_VERSION ]]; then
       RUBY_VERSION=$DEFAULT_RUBY_VERSION
     fi
   fi
@@ -42,18 +42,18 @@ fi
 
 # Install
 install_ruby() {
-  if [ $RUBY != 'Y' ]; then
+  if [[ $RUBY != 'Y' ]]; then
     return
   fi
 
   set -x
-  if [ -d "$RUBY_INSTALLATION_PATH" ]; then
+  if [[ -d "$RUBY_INSTALLATION_PATH" ]]; then
     mv "$RUBY_INSTALLATION_PATH" "$RUBY_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
-  # if [ ! -f "ruby-$RUBY_VERSION.tar.gz" ]; then
+  # if [[ ! -f "ruby-$RUBY_VERSION.tar.gz" ]]; then
   #   curl --compressed -fLO "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz"
   # else
-  if [ -f "ruby-$RUBY_VERSION.tar.gz" ]; then
+  if [[ -f "ruby-$RUBY_VERSION.tar.gz" ]]; then
     rm -rf "ruby-$RUBY_VERSION"
   fi
   wget -c "https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz"

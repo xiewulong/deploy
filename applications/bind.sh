@@ -5,23 +5,23 @@ set -e
 # Options
 BIND_INSTALLATION_PATH="$INSTALLATION_PATH/bind"
 
-if [ -z $BIND ]; then
+if [[ -z $BIND ]]; then
   typeset -u BIND
-  if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
     read -p "$LANG_INSTALL_BIND[Y/N]: ($DEFAULT_BIND) " BIND
   fi
-  if [ -z $BIND ]; then
+  if [[ -z $BIND ]]; then
     BIND=$DEFAULT_BIND
   fi
 fi
 
-if [[ $BIND == 'Y' && -d "$BIND_INSTALLATION_PATH" ]]; then
+if [[ $BIND == 'Y' && -d $BIND_INSTALLATION_PATH ]]; then
   typeset -u BIND
-  if [ -z $BIND_OVERWRITE ]; then
-    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+  if [[ -z $BIND_OVERWRITE ]]; then
+    if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
       read -p "$LANG_BIND_OVERWRITE[Y/N]: ($DEFAULT_BIND_OVERWRITE) " BIND
     fi
-    if [ -z $BIND ]; then
+    if [[ -z $BIND ]]; then
       BIND=$DEFAULT_BIND_OVERWRITE
     fi
   else
@@ -29,12 +29,12 @@ if [[ $BIND == 'Y' && -d "$BIND_INSTALLATION_PATH" ]]; then
   fi
 fi
 
-if [ $BIND == 'Y' ]; then
-  if [ -z $BIND_VERSION ]; then
-    if [ $DEFAULT_INSTALLATION_MODE != 'Y' ]; then
+if [[ $BIND == 'Y' ]]; then
+  if [[ -z $BIND_VERSION ]]; then
+    if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
       read -p "$LANG_BIND_VERSION: ($DEFAULT_BIND_VERSION) " BIND_VERSION
     fi
-    if [ -z $BIND_VERSION ]; then
+    if [[ -z $BIND_VERSION ]]; then
       BIND_VERSION=$DEFAULT_BIND_VERSION
     fi
   fi
@@ -42,15 +42,15 @@ fi
 
 # Install
 install_bind() {
-  if [ $BIND != 'Y' ]; then
+  if [[ $BIND != 'Y' ]]; then
     return
   fi
 
   set -x
-  if [ -d "$BIND_INSTALLATION_PATH" ]; then
+  if [[ -d "$BIND_INSTALLATION_PATH" ]]; then
     mv "$BIND_INSTALLATION_PATH" "$BIND_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
-  if [ -f "bind-$BIND_VERSION.tar.gz" ]; then
+  if [[ -f "bind-$BIND_VERSION.tar.gz" ]]; then
     rm -rf "bind-$BIND_VERSION"
   fi
   typeset -l BIND_VERSION_FOR_URL
