@@ -123,6 +123,7 @@ if [[ $BASIC_SETUP == 'Y' ]]; then
   if [[ -n $TIMEOUT ]]; then
     set -x
     echo "TMOUT=$TIMEOUT" > /etc/profile.d/tmout.sh
+    source /etc/profile.d/tmout.sh
     set +x
   fi
   if [[ -n $USERNAME ]]; then
@@ -147,7 +148,7 @@ fi
 
 if [[ $COMMON_LIBRARY == 'Y' ]]; then
   set -x
-  yum -y install bash-completion bzip2 ca-certificates gcc gcc-c++ lrzsz make net-tools ntp redhat-lsb vim wget \
+  yum -y install bash-completion bzip2 ca-certificates gcc gcc-c++ lrzsz make net-tools ntp redhat-lsb vim \
                  bison-devel curl-devel gdbm-devel gd-devel GeoIP-devel glib2-devel glibc-devel ImageMagick-devel libcurl-devel libffi-devel libxml2-devel libxslt-devel ncurses-devel openssl-devel pcre-devel readline-devel zlib-devel
   # yum -y install zip unzip emacs libcap diffutils psmisc libtool-libs file flex bison patch c-ares-devel e2fsprogs-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libXpm-devel
   # yum -y installcairo cairo-devel cairomm-devel giflib-devel libjpeg-turbo-devel pango pango-devel pangomm pangomm-devel
