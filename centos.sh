@@ -24,7 +24,6 @@ set -e
 
 # Applications
 APPLICATIONS=(
-  bind
   docker
   git
   ruby

@@ -1,7 +1,5 @@
 #!/bin/bash
 LANG_BASIC_SETUP="Basic setup"
-LANG_BIND_OVERWRITE="Bind has been installed, overwrite"
-LANG_BIND_VERSION="Bind version"
 LANG_COMMON_INSTALLATION_PATH="Common installation path"
 LANG_DEFAULT_INSTALLATION_MODE="Default installation mode"
 LANG_DOCKER_COMPOSE_VERSION="Docker compose version"
