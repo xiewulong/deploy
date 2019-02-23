@@ -121,7 +121,6 @@ install_nginx() {
   source /etc/profile.d/nginx.sh
   # curl --compressed -fLO https://github.com/xiewulong/nginx/raw/master/nginx.service.sample
   # mv nginx.service.sample /usr/lib/systemd/system/nginx.service
-  # systemctl enable nginx
-  # systemctl start nginx
+  # systemctl enable --now nginx
   set +x
 }
