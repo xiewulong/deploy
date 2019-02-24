@@ -60,5 +60,8 @@ EOF
 
   systemctl enable --now kubelet
 
+  swapoff -a
+  sed -i '/swap/d' /etc/fstab
+
   set +x
 }
