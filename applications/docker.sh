@@ -13,6 +13,14 @@ if [[ -z $DOCKER ]]; then
 fi
 
 if [[ $DOCKER == 'Y' ]]; then
+  if [[ -z $DOCKER_VERSION ]]; then
+    if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
+      read -p "$LANG_DOCKER_VERSION: ($DEFAULT_DOCKER_VERSION) " DOCKER_VERSION
+    fi
+    if [[ -z $DOCKER_VERSION ]]; then
+      DOCKER_VERSION=$DEFAULT_DOCKER_VERSION
+    fi
+  fi
   if [[ -z $DOCKER_INSTALLATION_SOURCE ]]; then
     typeset -u DOCKER_INSTALLATION_SOURCE
     if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
@@ -64,6 +72,7 @@ install_docker() {
   esac
 
   set -x
+  export VERSION=$DOCKER_VERSION
   curl -fsSL https://get.docker.com/ | sh -s docker --mirror $DOCKER_INSTALLATION_SOURCE_MIRROR
   # usermod -aG docker username
   # echo '{"registry-mirrors":[],"insecure-registries":[],"exec-opts":["native.cgroupdriver=systemd"]}' > /etc/docker/daemon.json
