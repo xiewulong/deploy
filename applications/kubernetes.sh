@@ -41,6 +41,7 @@ install_KUBERNETES() {
   esac
 
   set -x
+
   cat <<EOF > /etc/yum.repos.d/kubernetes.repo
   [kubernetes]
   name=Kubernetes
@@ -51,9 +52,12 @@ install_KUBERNETES() {
   gpgkey=$KUBERNETES_INSTALLATION_SOURCE_HOST/yum/doc/yum-key.gpg $KUBERNETES_INSTALLATION_SOURCE_HOST/yum/doc/rpm-package-key.gpg
   exclude=kube*
   EOF
+
   setenforce 0
   sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+
   yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
   systemctl enable --now kubelet
+
   set +x
 }
