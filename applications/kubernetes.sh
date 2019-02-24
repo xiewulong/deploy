@@ -28,7 +28,7 @@ if [[ $KUBERNETES == 'Y' ]]; then
 fi
 
 # Install
-install_KUBERNETES() {
+install_kubernetes() {
   if [[ $KUBERNETES != 'Y' ]]; then
     return
   fi
