@@ -42,16 +42,16 @@ install_KUBERNETES() {
 
   set -x
 
-  cat <<EOF > /etc/yum.repos.d/kubernetes.repo
-  [kubernetes]
-  name=Kubernetes
-  baseurl=$KUBERNETES_INSTALLATION_SOURCE_HOST/yum/repos/kubernetes-el7-x86_64
-  enabled=1
-  gpgcheck=1
-  repo_gpgcheck=1
-  gpgkey=$KUBERNETES_INSTALLATION_SOURCE_HOST/yum/doc/yum-key.gpg $KUBERNETES_INSTALLATION_SOURCE_HOST/yum/doc/rpm-package-key.gpg
-  exclude=kube*
-  EOF
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=$KUBERNETES_INSTALLATION_SOURCE_HOST/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=$KUBERNETES_INSTALLATION_SOURCE_HOST/yum/doc/yum-key.gpg $KUBERNETES_INSTALLATION_SOURCE_HOST/yum/doc/rpm-package-key.gpg
+exclude=kube*
+EOF
 
   setenforce 0
   sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
