@@ -25,6 +25,7 @@ set -e
 # Applications
 APPLICATIONS=(
   docker
+  kubernetes
   git
   ruby
   nginx
