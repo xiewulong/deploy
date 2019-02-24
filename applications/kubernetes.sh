@@ -57,6 +57,7 @@ install_KUBERNETES() {
   sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
   yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+
   systemctl enable --now kubelet
 
   set +x
