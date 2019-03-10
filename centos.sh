@@ -26,6 +26,7 @@ set -e
 APPLICATIONS=(
   docker
   kubernetes
+  helm
   git
   ruby
   nginx
