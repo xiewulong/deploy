@@ -121,16 +121,18 @@ if [[ $BASIC_SETUP == 'Y' ]]; then
     hostnamectl set-hostname $HOST_NAME
     set +x
   fi
+  if [[ -n $USERNAME ]]; then
+    set -x
+    useradd $USERNAME
+    # echo 'password' | passwd --stdin $USERNAME
+    # usermod -aG wheel $USERNAME
+    # chcon -Rt httpd_sys_rw_content_t /home/$USERNAME
+    set +x
+  fi
   if [[ -n $TIMEOUT ]]; then
     set -x
     echo "TMOUT=$TIMEOUT" > /etc/profile.d/tmout.sh
     source /etc/profile.d/tmout.sh
-    set +x
-  fi
-  if [[ -n $USERNAME ]]; then
-    set -x
-    useradd $USERNAME
-    # chcon -Rt httpd_sys_rw_content_t /home/$USERNAME
     set +x
   fi
 fi
