@@ -117,7 +117,6 @@ install_nginx() {
   make
   make install
   cd ..
-  rm -rf "nginx-$NGINX_VERSION"
   echo "export PATH=$NGINX_INSTALLATION_PATH/sbin:"'$PATH' > /etc/profile.d/nginx.sh
   source /etc/profile.d/nginx.sh
   # curl --compressed -fLO https://github.com/xiewulong/nginx/raw/master/nginx.service.sample

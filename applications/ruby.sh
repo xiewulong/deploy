@@ -62,7 +62,6 @@ install_ruby() {
   make
   make install
   cd ..
-  rm -rf "ruby-$RUBY_VERSION"
   echo "export PATH=$RUBY_INSTALLATION_PATH/bin:"'$PATH' > /etc/profile.d/ruby.sh
   source /etc/profile.d/ruby.sh
   # gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
