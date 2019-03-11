@@ -49,13 +49,13 @@ install_helm() {
   if [[ -d $HELM_INSTALLATION_PATH ]]; then
     mv $HELM_INSTALLATION_PATH "$HELM_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
   fi
-  mkdir $HELM_INSTALLATION_PATH
   if [[ -f "helm-v$HELM_VERSION-linux-amd64.tar.gz" ]]; then
     rm -rf "helm-v$HELM_VERSION-linux-amd64"
   fi
   wget -c "https://storage.googleapis.com/kubernetes-helm/helm-v$HELM_VERSION-linux-amd64.tar.gz"
   tar zxvf "helm-v$HELM_VERSION-linux-amd64.tar.gz"
   mv linux-amd64 "helm-v$HELM_VERSION-linux-amd64"
+  mkdir $HELM_INSTALLATION_PATH
   mv "helm-v$HELM_VERSION-linux-amd64/helm" "helm-v$HELM_VERSION-linux-amd64/tiller" $HELM_INSTALLATION_PATH/
   echo "export PATH=$HELM_INSTALLATION_PATH:"'$PATH' > /etc/profile.d/helm.sh
   source /etc/profile.d/helm.sh
