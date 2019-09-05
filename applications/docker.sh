@@ -73,7 +73,7 @@ install_docker() {
   curl -fsSL https://get.docker.com/ | sh -s docker --mirror $DOCKER_INSTALLATION_SOURCE_MIRROR
   # usermod -aG docker username
   # echo '{"registry-mirrors":[],"insecure-registries":[],"exec-opts":["native.cgroupdriver=systemd"]}' > /etc/docker/daemon.json
-  # https://cr.console.aliyun.com/#/accelerator
+  # https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
   systemctl enable --now docker
   set +x
 
