@@ -15,10 +15,7 @@ fi
 if [[ $DOCKER == 'Y' ]]; then
   if [[ -z $DOCKER_VERSION ]]; then
     if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
-      read -p "$LANG_DOCKER_VERSION: ($DEFAULT_DOCKER_VERSION) " DOCKER_VERSION
-    fi
-    if [[ -z $DOCKER_VERSION ]]; then
-      DOCKER_VERSION=$DEFAULT_DOCKER_VERSION
+      read -p "$LANG_DOCKER_VERSION: " DOCKER_VERSION
     fi
   fi
   if [[ -z $DOCKER_INSTALLATION_SOURCE ]]; then
