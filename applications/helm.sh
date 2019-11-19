@@ -56,7 +56,7 @@ install_helm() {
   tar zxvf "helm-v$HELM_VERSION-linux-amd64.tar.gz"
   mv linux-amd64 "helm-v$HELM_VERSION-linux-amd64"
   mkdir $HELM_INSTALLATION_PATH
-  mv "helm-v$HELM_VERSION-linux-amd64/helm" "helm-v$HELM_VERSION-linux-amd64/tiller" $HELM_INSTALLATION_PATH/
+  mv "helm-v$HELM_VERSION-linux-amd64/helm" $HELM_INSTALLATION_PATH/
   echo "export PATH=$HELM_INSTALLATION_PATH:"'$PATH' > /etc/profile.d/helm.sh
   source /etc/profile.d/helm.sh
   set +x
