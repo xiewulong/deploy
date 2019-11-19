@@ -52,7 +52,7 @@ install_helm() {
   if [[ -f "helm-v$HELM_VERSION-linux-amd64.tar.gz" ]]; then
     rm -rf "helm-v$HELM_VERSION-linux-amd64"
   fi
-  wget -c "https://storage.googleapis.com/kubernetes-helm/helm-v$HELM_VERSION-linux-amd64.tar.gz"
+  wget -c "https://get.helm.sh/helm-v$HELM_VERSION-linux-amd64.tar.gz"
   tar zxvf "helm-v$HELM_VERSION-linux-amd64.tar.gz"
   mv linux-amd64 "helm-v$HELM_VERSION-linux-amd64"
   mkdir $HELM_INSTALLATION_PATH
