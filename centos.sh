@@ -118,7 +118,7 @@ fi
 if [[ $BASIC_SETUP == 'Y' ]]; then
   if [[ -n $HOST_NAME ]]; then
     set -x
-    hostnamectl set-hostname $HOST_NAME
+    hostnamectl --static set-hostname $HOST_NAME
     set +x
   fi
   if [[ -n $USERNAME ]]; then
