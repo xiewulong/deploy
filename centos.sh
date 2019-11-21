@@ -151,8 +151,8 @@ fi
 
 if [[ $COMMON_LIBRARY == 'Y' ]]; then
   set -x
-  yum -y install bash-completion bzip2 ca-certificates epel-release gcc gcc-c++ lrzsz make net-tools redhat-lsb tar vim yum-utils \
-                 curl-devel gdbm-devel gd-devel glib2-devel glibc-devel libcurl-devel libffi-devel libxml2-devel libxslt-devel ncurses-devel openssl-devel pcre-devel readline-devel zlib-devel
+  yum -y install bash-completion bzip2 ca-certificates epel-release gcc gcc-c++ lrzsz make net-tools redhat-lsb tar vim yum-utils
+  # yum -y install curl-devel gdbm-devel gd-devel glib2-devel glibc-devel libcurl-devel libffi-devel libxml2-devel libxslt-devel ncurses-devel openssl-devel pcre-devel readline-devel zlib-devel
   # yum -y install zip unzip emacs libcap diffutils psmisc libtool-libs file flex bison patch c-ares-devel e2fsprogs-devel gettext-devel glib2-devel gmp-devel kernel-devel krb5-devel libc-client-devel libevent-devel libicu-devel libidn-devel libjpeg-devel libmcrypt-devel libpng-devel libXpm-devel
   # yum -y install cairo cairo-devel cairomm-devel giflib-devel libjpeg-turbo-devel pango pango-devel pangomm pangomm-devel
   # yum -y install subversion git mariadb mariadb-devel re2c
