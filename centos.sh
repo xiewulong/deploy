@@ -163,13 +163,16 @@ fi
 
 set -x
 yum -y install wget
-yum clean all
 set +x
 
 for((i = 0, len = ${#APPLICATIONS[*]}; i < len; i++))
 do
   install_${APPLICATIONS[$i]}
 done
+
+set -x
+yum clean all
+set +x
 
 # Back to current work directory
 cd $CWD
