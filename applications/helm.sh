@@ -36,7 +36,6 @@ install_helm() {
   wget -c "https://get.helm.sh/helm-v$HELM_VERSION-linux-amd64.tar.gz"
   tar zxvf "helm-v$HELM_VERSION-linux-amd64.tar.gz"
   mv linux-amd64 "helm-v$HELM_VERSION-linux-amd64"
-  mkdir $HELM_INSTALLATION_PATH
   mv "helm-v$HELM_VERSION-linux-amd64/helm" /usr/local/bin/ -f
   set +x
 }
