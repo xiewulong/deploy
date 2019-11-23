@@ -2,8 +2,6 @@
 set -e
 
 # Options
-HELM_INSTALLATION_PATH="$INSTALLATION_PATH/helm"
-
 if [[ -z $HELM ]]; then
   typeset -u HELM
   if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
@@ -11,20 +9,6 @@ if [[ -z $HELM ]]; then
   fi
   if [[ -z $HELM ]]; then
     HELM=$DEFAULT_HELM
-  fi
-fi
-
-if [[ $HELM == 'Y' && -d $HELM_INSTALLATION_PATH ]]; then
-  typeset -u HELM
-  if [[ -z $HELM_OVERWRITE ]]; then
-    if [[ $DEFAULT_INSTALLATION_MODE != 'Y' ]]; then
-      read -p "$LANG_HELM_OVERWRITE[Y/N]: ($DEFAULT_HELM_OVERWRITE) " HELM
-    fi
-    if [[ -z $HELM ]]; then
-      HELM=$DEFAULT_HELM_OVERWRITE
-    fi
-  else
-    HELM=$HELM_OVERWRITE
   fi
 fi
 
@@ -46,9 +30,6 @@ install_helm() {
   fi
 
   set -x
-  if [[ -d $HELM_INSTALLATION_PATH ]]; then
-    mv $HELM_INSTALLATION_PATH "$HELM_INSTALLATION_PATH.`date +%Y%m%d%H%M%S`"
-  fi
   if [[ -f "helm-v$HELM_VERSION-linux-amd64.tar.gz" ]]; then
     rm -rf "helm-v$HELM_VERSION-linux-amd64"
   fi
@@ -56,8 +37,6 @@ install_helm() {
   tar zxvf "helm-v$HELM_VERSION-linux-amd64.tar.gz"
   mv linux-amd64 "helm-v$HELM_VERSION-linux-amd64"
   mkdir $HELM_INSTALLATION_PATH
-  mv "helm-v$HELM_VERSION-linux-amd64/helm" $HELM_INSTALLATION_PATH/
-  echo "export PATH=$HELM_INSTALLATION_PATH:"'$PATH' > /etc/profile.d/helm.sh
-  source /etc/profile.d/helm.sh
+  mv "helm-v$HELM_VERSION-linux-amd64/helm" /usr/local/bin/ -f
   set +x
 }

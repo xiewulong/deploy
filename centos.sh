@@ -25,6 +25,7 @@ set -e
 # Applications
 APPLICATIONS=(
   docker
+  docker_compose
   kubernetes
   helm
   git
